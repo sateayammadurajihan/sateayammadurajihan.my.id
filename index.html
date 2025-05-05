@@ -1,27 +1,53 @@
-<h2>Kontak</h2>
-<p>📞 Telepon: <a href="tel: class="link-phone">+62 8</a></p>
-<p>📍 Alamat: Jl. </p>
-</section>
-<section id="maps">
-<h2>Lokasi Warung</h2>
-<iframe
-  src="https://maps.app.goo.gl/3gZXVWowmZYfLo5w6?g_st=com.google.maps.preview.copy"
-  allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-  title="Map Warung Sate Ayam"></iframe>
-  <link rel="stylesheet" href="styles.css" />
-</section>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Warung Sate Ayam</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header>
+    <h1>Warung Sate Ayam</h1>
+    <p>Menu Spesial Sate Ayam dan Lainnya</p>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#menuSection">Menu</a></li>
+        <li><a href="#contact">Kontak</a></li>
+        <li><a href="#maps">Lokasi</a></li>
+    </ul>
+</nav>
+
+<main>
+    <section id="menuSection" class="card-section">
+        <h2>Menu Kami</h2>
+        <ul class="menu-list" id="menuList">
+            <!-- Menu items by JS -->
+        </ul>
+    </section>
+
+    <section id="contact" class="card-section">
+        <h2>Kontak</h2>
+        <div class="contact-info">
+            <p>📞 Telepon: <a href="tel:+6281234567890" class="link-phone">+62 812-3456-7890</a></p>
+            <p>📍 Alamat: Jl. Sate Ayam No.10, Kota Contoh, Indonesia</p>
+        </div>
+    </section>
+
+    <section id="maps" class="card-section">
+        <h2>Lokasi Warung</h2>
+        <div class="map-wrapper">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.543983219993!2d110.36758481477501!3d-7.798657194386309!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a580a882b0a99%3A0x5a38a6e97c1cdeb7!2sSate%20Ayam%20Warung!5e0!3m2!1sid!2sid!4v1687389578984!5m2!1sid!2sid"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                title="Map Warung Sate Ayam" class="responsive-map"></iframe>
+        </div>
+    </section>
 </main>
-<!-- Chatbot -->
-<div id="chatbot" role="dialog" aria-labelledby="chatbotHeader" aria-describedby="chatbotMessages">
-<div id="chatbotHeader">Chat Bantuan</div>
-<div id="chatbotMessages" tabindex="0" aria-live="polite" aria-atomic="false"></div>
-<form id="chatbotForm" autocomplete="off">
-<div id="chatbotInputArea">
-  <input type="text" id="chatbotInput" placeholder="Tulis pesan..." aria-label="Ketik pesan chatbot" />
-  <button type="submit" aria-label="Kirim pesan">Kirim</button>
-</div>
-</form>
-</div>
+
 <script src="scripts.js"></script>
 </body>
 </html>
