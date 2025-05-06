@@ -12,10 +12,6 @@ menu_items = {
     "sate sapi 10": 18000,
     "sate ayam polos 10": 15000,
     "soto ayam": 15000,
-    "lontong": 5000,
-    "kerupuk udang": 2000,
-    "kerupuk black": 2000,
-    "nasi": 5000,
     "sate ayam campur kulit + lontong": 20000,
     "sate sapi + lontong": 23000,
     "sate kambing + lontong": 23000,
@@ -43,6 +39,10 @@ menu_items = {
     "sate ayam campur kulit + nasi 15": 28000,
     "sate ayam polos + nasi 15": 32000,
     "sate thaican + nasi 15": 28000,
+    "lontong": 5000,
+    "kerupuk udang": 2000,
+    "kerupuk black": 2000,
+    "nasi": 5000,
 }
 
 @app.route("/bot", methods=["POST"])
@@ -59,7 +59,7 @@ def bot():
         for item, price in menu_items.items():
             response += f"- {item}: Rp {price:,}\n"
     elif message == "jam buka":
-        response = "🕙 *Jam Buka:*\nSetiap hari 10.00 – 22.00 WIB"
+        response = "🕙 *Jam Buka:*\nSetiap hari 17.00 – 00.00 WIB"
     elif message.startswith("pesan"):
         try:
             # Contoh: pesan sate kambing + nasi 2
