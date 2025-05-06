@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from datetime import datetime
 from db_config import get_connection
 
@@ -12,35 +12,29 @@ def bot():
 
     print("Pesan masuk:", message)
 
-    # Respon awal
     response = f"Halo, kamu mengirim: {message}"
 
     # Simpan ke DB
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        sql = "INSERT INTO chat_messages (sender, message, response, created_at) VALUES (%s, %s, %s, %s)"
-        cursor.execute(sql, (sender, message, response, datetime.now()))
+        cursor.execute(
+            "INSERT INTO messages (sender, message, timestamp) VALUES (%s, %s, %s)",
+            (sender, message, datetime.now())
+        )
         conn.commit()
         cursor.close()
         conn.close()
     except Exception as e:
         print("DB Error:", e)
-        return jsonify({"error": "Failed to save message to database"}), 500
 
-    # Balasan ke WhatsApp
-    return f"""<?xml version="1.0" encoding="UTF-8"?>
+    # Balasan Twilio format XML
+    twiml_response = f"""<?xml version="1.0" encoding="UTF-8"?>
 <Response>
     <Message>{response}</Message>
 </Response>"""
 
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({"error": "Not found"}), 404
-
-@app.errorhandler(500)
-def internal_server_error(error):
-    return jsonify({"error": "Internal server error"}), 500
+    return Response(twiml_response, mimetype="application/xml")
 
 if __name__ == "__main__":
-    app.run(debug=True, port=500)
+    app.run()
