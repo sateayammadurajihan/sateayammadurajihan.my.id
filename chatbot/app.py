@@ -116,4 +116,4 @@ def simpan_pesanan(sender, item, jumlah, total):
         print("Gagal simpan pesanan:", e)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=500)
