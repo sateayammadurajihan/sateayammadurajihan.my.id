@@ -45,6 +45,9 @@ menu_items = {
     "nasi": 5000,
 }
 
+# Keywords to recognize greetings
+greeting_keywords = {"halo", "hai", "hello", "selamat pagi", "selamat siang", "selamat sore", "selamat malam", "hallo"}
+
 @app.route("/bot", methods=["POST"])
 def bot():
     data = request.values
@@ -53,16 +56,37 @@ def bot():
 
     print("Pesan masuk:", message)
 
-    # Cek isi pesan
-    if message == "menu":
-        response = "*📋 Menu Warung Sate:*\n"
+    # Handle greeting messages with welcome response
+    if any(message.startswith(greet) for greet in greeting_keywords):
+        response = (
+            "👋 Halo! Selamat datang di Warung Sate Ayam Madura Jihan. "
+            "Kami siap membantu Anda memesan sate lezat dan hidangan lainnya. 😊\n\n"
+            "Ketik:\n"
+            "- *menu* untuk melihat daftar menu kami.\n"
+            "- *jam buka* untuk melihat jam operasional.\n"
+            "- *pesan [menu] [jumlah]* untuk memesan.\n\n"
+            "Mari nikmati cita rasa otentik Sate Madura kami!"
+        )
+    elif message == "menu":
+        response = "*🍢 Berikut Menu Spesial dari Warung Sate Ayam Madura Jihan:*\n"
         for item, price in menu_items.items():
-            response += f"- {item}: Rp {price:,}\n"
+            # Capitalize properly
+            name = item.title()
+            # Check if the last word is numeric quantity to add " Tusuk"
+            last_word = name.rstrip().split()[-1]
+            if last_word.isdigit():
+                name += " Tusuk"
+            response += f"• {name} : Rp {price:,}\n"
+        response += "\n*Yuk, pilih dan pesan yang kamu suka ya!* 😊"
     elif message == "jam buka":
-        response = "🕙 *Jam Buka:*\nSetiap hari 17.00 – 00.00 WIB"
+        response = (
+            "⏰ *Jam Buka Warung:*\n"
+            "Kami siap melayani Anda setiap hari dari pukul 17.00 - 00.00 WIB.\n\n"
+            "Jangan sampai kehabisan, datang ya!"
+        )
     elif message.startswith("pesan"):
         try:
-            # Contoh: pesan sate kambing + nasi 2
+            # contoh format pesan: pesan sate kambing + nasi 2
             parts = message.replace("pesan", "").strip().rsplit(" ", 1)
             item = parts[0].strip()
             jumlah = int(parts[1]) if len(parts) > 1 and parts[1].isdigit() else 1
@@ -71,16 +95,33 @@ def bot():
             if harga:
                 total = harga * jumlah
                 simpan_pesanan(sender, item, jumlah, total)
-                response = f"✅ Pesanan diterima:\n- {item} x{jumlah}\n- Total: Rp {total:,}\nTerima kasih!"
+                response = (
+                    f"✅ *Pesanan Anda Berhasil!* 🎉\n"
+                    f"- Menu: {item.title()}\n"
+                    f"- Jumlah: {jumlah} porsi\n"
+                    f"- Total bayar: Rp {total:,}\n\n"
+                    f"Terima kasih sudah memesan di Warung Sate Ayam Madura Jihan.\n"
+                    f"Pesanan akan segera kami proses ya! 🙏"
+                )
             else:
-                response = "⚠️ Menu tidak ditemukan. Ketik *menu* untuk lihat daftar."
+                response = (
+                    "❌ Maaf, menu yang kamu pesan tidak tersedia.\n"
+                    "Ketik *menu* untuk melihat daftar menu lengkap kami."
+                )
         except Exception as e:
             print("Error:", e)
-            response = "❌ Format salah. Contoh: *pesan sate kambing + nasi 2*"
+            response = "⚠️ Format pesan salah!\nContoh cara pesan: *pesan sate kambing + nasi 2*"
     else:
-        response = "Halo! Ketik:\n- *menu* untuk lihat menu\n- *jam buka* untuk info jam\n- *pesan [menu] [jumlah]* untuk order"
+        response = (
+            "👋 Halo! Selamat datang di Warung Sate Ayam Madura Jihan.\n"
+            "Kamu bisa ketik:\n"
+            "- *menu* untuk melihat daftar menu lezat kami.\n"
+            "- *jam buka* untuk tahu jam buka warung.\n"
+            "- *pesan [menu] [jumlah]* untuk memesan makanan favoritmu.\n\n"
+            "Kami siap melayani dengan hati!"
+        )
 
-    # Simpan pesan
+    # Simpan pesan ke DB
     try:
         conn = get_connection()
         cursor = conn.cursor()
@@ -94,7 +135,7 @@ def bot():
     except Exception as e:
         print("DB Error:", e)
 
-    # Format XML Twilio
+    # Format response untuk Twilio
     twiml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <Response>
     <Message>{response}</Message>
@@ -117,3 +158,5 @@ def simpan_pesanan(sender, item, jumlah, total):
 
 if __name__ == "__main__":
     app.run(debug=True)
+</content>
+</create_file>
