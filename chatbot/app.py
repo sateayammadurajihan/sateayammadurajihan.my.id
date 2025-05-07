@@ -126,7 +126,7 @@ def bot():
         conn = get_connection()
         cursor = conn.cursor()
         cursor.execute(
-            "INSERT INTO messages (sender, message, timestamp) VALUES (%s, %s, %s)",
+            "INSERT INTO chat_messages (sender, message, created_at) VALUES (%s, %s, %s)",
             (sender, message, datetime.now())
         )
         conn.commit()
