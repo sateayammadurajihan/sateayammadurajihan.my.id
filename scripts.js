@@ -1,4 +1,4 @@
-// Daftar menu
+// Menu data (same as before)
 const menuData = [
   { name: "Sate Kambing (10 tusuk)", price: "Rp 18.000" },
   { name: "Sate Sapi (10 tusuk)", price: "Rp 18.000" },
@@ -39,58 +39,13 @@ const menuData = [
   { name: "Kerupuk Black", price: "Rp 2.000" },
 ];
 
-// Render menu
-document.addEventListener("DOMContentLoaded", () => {
-  const menuList = document.getElementById("menuList");
-  if (menuList) {
-    menuData.forEach((item) => {
-      const li = document.createElement("li");
-      li.className = "menu-item";
-      li.innerHTML = `<span>${item.name} <span class="price">${item.price}</span></span>`;
-      menuList.appendChild(li);
-    });
-  }
-
-  // Chatbot
-  const chatbotMessages = document.getElementById("chatbotMessages");
-  const chatbotForm = document.getElementById("chatbotForm");
-  const chatbotInput = document.getElementById("chatbotInput");
-
-  const botReplies = {
-    "halo": "Halo! Ada yang bisa saya bantu?",
-    "menu": "Silakan lihat menu lengkap di bagian Menu pada halaman ini.",
-    "buka": "Warung buka setiap hari dari jam 08.00 hingga 21.00 WIB.",
-    "alamat": "Alamat kami di Jl. Komodor Udara Supadio No.63, Bandung.",
-    "kontak": "Nomor telepon kami +62 81...",
-    "terima kasih": "Sama-sama! Jika ada pertanyaan lain, jangan ragu hubungi kami.",
-  };
-
-  function appendMessage(text, sender) {
-    const div = document.createElement("div");
-    div.classList.add("message", sender);
-    div.textContent = text;
-    chatbotMessages.appendChild(div);
-    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-  }
-
-  function getBotReply(message) {
-    const msg = message.toLowerCase();
-    for (const key in botReplies) {
-      if (msg.includes(key)) return botReplies[key];
-    }
-    return "Maaf, saya tidak mengerti. Bisa ulangi dengan kata lain?";
-  }
-
-  if (chatbotForm && chatbotInput && chatbotMessages) {
-    chatbotForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const userMsg = chatbotInput.value.trim();
-      if (!userMsg) return;
-      appendMessage(userMsg, "user");
-      chatbotInput.value = "";
-      setTimeout(() => {
-        appendMessage(getBotReply(userMsg), "bot");
-      }, 700);
-    });
-  }
+window.addEventListener('DOMContentLoaded', () => {
+  const menuList = document.getElementById('menuList');
+  menuData.forEach(item => {
+    const li = document.createElement('li');
+    li.className = 'menu-item';
+    li.tabIndex = 0;
+    li.textContent = `${item.name} — ${item.price}`;
+    menuList.appendChild(li);
+  });
 });
