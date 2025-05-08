@@ -1,6 +1,6 @@
 // Menu data (same as before)
 const menuData = [
-  { name: "Sate Kambing (10 tusuk)", price: "Rp 18.000" },
+  { name: "Sate Kambing (10 tusuk)", price: "Rp 18.000", image: "images/sate-kambing.jpg" },
   { name: "Sate Sapi (10 tusuk)", price: "Rp 18.000" },
   { name: "Sate Thaican (10 tusuk)", price: "Rp 18.000" },
   { name: "Sate Ayam Campur Kulit (10 tusuk)", price: "Rp 15.000" },
