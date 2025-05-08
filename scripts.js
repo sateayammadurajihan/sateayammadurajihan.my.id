@@ -1,4 +1,4 @@
-// Menu data (same as before)
+// Menu data
 const menuData = [
   { name: "Sate Kambing (10 tusuk)", price: "Rp 18.000", image: "images/sate-kambing.jpg" },
   { name: "Sate Sapi (10 tusuk)", price: "Rp 18.000", image: "images/sate-sapi.jpg" },
@@ -45,7 +45,27 @@ window.addEventListener('DOMContentLoaded', () => {
     const li = document.createElement('li');
     li.className = 'menu-item';
     li.tabIndex = 0;
-    li.textContent = `${item.name} — ${item.price}`;
+
+    // Tambah gambar jika ada
+    if (item.image) {
+      const img = document.createElement('img');
+      img.src = item.image;
+      img.alt = item.name;
+      img.className = 'menu-image';
+      li.appendChild(img);
+    }
+
+    // Nama menu
+    const title = document.createElement('h3');
+    title.textContent = item.name;
+    li.appendChild(title);
+
+    // Harga
+    const price = document.createElement('p');
+    price.textContent = item.price;
+    price.className = 'price';
+    li.appendChild(price);
+
     menuList.appendChild(li);
   });
 });
