@@ -79,24 +79,35 @@ h2 {
   font-weight: 700;
 }
 
+/* Menu List Horizontal */
 ul.menu-list {
   list-style: none;
-  padding: 0;
+  padding: 10px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
 }
+
 li.menu-item {
+  flex: 0 0 auto;
+  width: 220px;
+  min-height: 280px;
+  scroll-snap-align: start;
   background: #fce8c4;
-  margin-bottom: 10px;
   border-radius: 12px;
   box-shadow: 2px 5px 10px rgba(0,0,0,0.15);
-  animation: floatUpDown 4s ease-in-out infinite;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   padding: 10px 15px;
+  text-align: center;
   font-weight: 700;
   font-size: 1rem;
   color: #4a2100;
   cursor: default;
-  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: floatUpDown 4s ease-in-out infinite;
 }
 
 li.menu-item:hover,
@@ -143,23 +154,22 @@ footer {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Scrollbar styling for main menu */
-main::-webkit-scrollbar {
-  width: 6px;
+/* Scrollbar styling for horizontal list */
+ul.menu-list::-webkit-scrollbar {
+  height: 6px;
 }
-main::-webkit-scrollbar-thumb {
+ul.menu-list::-webkit-scrollbar-thumb {
   background: #e07b39;
   border-radius: 3px;
 }
-main {
+ul.menu-list {
   scrollbar-width: thin;
   scrollbar-color: #e07b39 transparent;
 }
 
-/* Responsive for smaller heights */
+/* Responsive fallback */
 @media (max-height: 600px) {
   li.menu-item {
-    margin-bottom: 8px;
     font-size: 0.9rem;
   }
 }
