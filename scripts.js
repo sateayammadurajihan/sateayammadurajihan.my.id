@@ -32,10 +32,10 @@ const menuData = [
   { name: "Soto Ayam", price: "Rp 15.000", image: "image/soto-ayam.jpg", detail: "Tanpa tambahan" },
   { name: "Soto Ayam + Lontong", price: "Rp 20.000", image: "image/soto-ayam.jpg", detail: "Dengan lontong" },
   { name: "Soto Ayam + Nasi", price: "Rp 20.000", image: "image/soto-ayam.jpg", detail: "Dengan nasi" },
-  { name: "Lontong", price: "Rp 5.000", detail: "2 buah lontong" },
-  { name: "Nasi", price: "Rp 5.000", detail: "1 bungkus" },
-  { name: "Kerupuk Udang", price: "Rp 2.000", detail: "1 bungkus" },
-  { name: "Kerupuk Black", price: "Rp 2.000", detail: "1 bungkus" }
+  { name: "Lontong", price: "Rp 5.000", image: "image/lontong.jpg", detail: "2 buah lontong" },
+  { name: "Nasi", price: "Rp 5.000", image: "image/nasi.jpg", detail: "1 bungkus" },
+  { name: "Kerupuk Udang", price: "Rp 2.000", image: "image/kerupuk-udang.jpg", detail: "1 bungkus" },
+  { name: "Kerupuk Black", price: "Rp 2.000", image: "image/kerupuk-black.jpg", detail: "1 bungkus" }
 ];
 
     window.addEventListener('DOMContentLoaded', () => {
