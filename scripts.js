@@ -1,7 +1,7 @@
 // Menu data
 const menuData = [
   { name: "Sate Kambing (10 tusuk)", price: "Rp 18.000", image: "image/sate-kambing.jpg" },
-  { name: "Sate Sapi (10 tusuk)", price: "Rp 18.000", image: "image/sate-sapi.jpg" },
+  { name: "Sate Sapi (10 tusuk)", price: "Rp 18.000", image: "./image/sate-sapi.jpg" },
   { name: "Sate Thaican (10 tusuk)", price: "Rp 18.000", image: "image/sate-thaican.jpg" },
   { name: "Sate Ayam Campur Kulit (10 tusuk)", price: "Rp 15.000", image: "image/sate-ayam-kulit.jpg" },
   { name: "Sate Ayam Polos (10 tusuk)", price: "Rp 18.000", image: "image/sate-ayam.jpg" },
