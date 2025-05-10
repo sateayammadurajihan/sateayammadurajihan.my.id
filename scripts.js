@@ -35,7 +35,7 @@ const menuData = [
   { name: "Lontong", price: "Rp 5.000", image: "image/lontong.jpg", detail: "2 buah lontong" },
   { name: "Nasi", price: "Rp 5.000", image: "image/nasi.jpg", detail: "1 bungkus" },
   { name: "Kerupuk Udang", price: "Rp 2.000", image: "image/kerupuk-udang.jpg", detail: "1 bungkus" },
-  { name: "Kerupuk Black", price: "Rp 2.000", image: "image/kerupuk-black.jpg", detail: "1 bungkus" }
+  { name: "Kerupuk Black", price: "Rp 2.000", image: "image/kerupuk-black.jpg", detail: "2 kerupuk" }
 ];
 
     window.addEventListener('DOMContentLoaded', () => {
