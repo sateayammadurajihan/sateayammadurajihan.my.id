@@ -2,52 +2,41 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sate Ayam Madura Jihan</title>
-  <link rel="icon" href="image/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="styles.css" />
-  <script type="module" src="https://cdn.jsdelivr.net/gh/domyid/tracker@main/index.js"></script>
 </head>
 <body>
-
   <nav>
-    <div class="nav-container">
-      <a href="#" class="nav-link">Home</a>
-      <a href="#about" class="nav-link">About</a>
-      <a href="#menu" class="nav-link">Menu</a>
-      <a href="#" class="nav-link cart-link" aria-label="Lihat Keranjang Belanja">
-        🛒 <span id="cartCount" class="cart-count">0</span>
-      </a>
-      <a href="https://maps.app.goo.gl/GLosJmV7v6x84nq76" target="_blank" rel="noopener noreferrer" class="nav-link">Peta Lokasi</a>
-      <a href="https://wa.me/14155238886?text=join%20actually-depth" target="_blank" rel="noopener noreferrer" class="nav-link contact-link">Contact</a>
+    <a href="#" class="nav-link active" data-section="menuSection">Home</a>
+    <a href="#" class="nav-link" data-section="aboutSection">About</a>
+    <a href="#" class="nav-link" data-section="checkoutSection">Checkout</a>
+    <div id="cartBtn" title="Keranjang Belanja">
+      <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm0 2m10-2c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zm-10.83-4l1.06-2h7.28l1.06 2H6.17zm-1.26-6h12.28l-2.55 5.5h-6.83L4.91 10z"/></svg>
+      <span id="cartCount">0</span>
     </div>
   </nav>
 
-  <header>
+  <section id="menuSection">
     <h1>Sate Ayam Madura Jihan</h1>
-    <p>Lezat &amp; Otentik, Sajian Sate Madura Asli yang Membuat Lidah Bergoyang</p>
-  </header>
+    <p class="subtitle">Lezat &amp; Otentik, Sajian Sate Madura Asli</p>
+    <h2>Menu Spesial</h2>
+    <ul id="menuList" class="menu-list" tabindex="0" aria-label="Daftar menu Sate Ayam Madura Jihan"></ul>
+  </section>
 
-  <main>
-    <section id="about" tabindex="0" aria-label="Tentang Sate Ayam Madura Jihan" style="padding: 20px;">
-      <h2>Tentang Kami</h2>
-      <p>
-        Kami menyajikan sate ayam Madura asli dengan resep turun-temurun, menggunakan bahan berkualitas dan bumbu rahasia yang kaya rasa. Nikmati cita rasa autentik yang tidak akan Anda temukan di tempat lain.
-      </p>
-    </section>
+  <section id="aboutSection" class="hidden" aria-label="Tentang Sate Ayam Madura Jihan">
+    <h2>About</h2>
+    <p class="about-content">
+      Warung Sate Ayam Madura Jihan adalah destinasi kuliner khas Madura yang menyajikan cita rasa otentik dan resep turun-temurun. Kami mengutamakan kualitas bahan baku dan kehangatan pelayanan agar setiap gigitan menjadi kenangan yang tak terlupakan.
+    </p>
+  </section>
 
-    <section id="menu" tabindex="0" aria-label="Daftar Menu Spesial Sate Ayam Madura Jihan">
-      <h2>Menu Spesial</h2>
-      <ul id="menuList" class="menu-list"></ul>
-    </section>
-
-    <section id="cartSection" class="cart-section" aria-label="Keranjang Belanja">
-      <h2>Keranjang Belanja</h2>
-      <ul id="cartList" class="cart-list"></ul>
-      <p id="cartTotal">Total: Rp 0</p>
-      <button id="clearCartBtn">Kosongkan Keranjang</button>
-    </section>
-  </main>
+  <section id="checkoutSection" class="hidden" aria-label="Halaman Checkout Keranjang Belanja">
+    <h2>Keranjang Belanja</h2>
+    <ul id="checkoutList"></ul>
+    <p id="checkoutTotal">Total: Rp 0</p>
+    <button class="checkout-btn" id="checkoutBtn">Checkout via WhatsApp</button>
+  </section>
 
   <footer>
     &copy; 2025 Warung Sate Ayam Madura Jihan
