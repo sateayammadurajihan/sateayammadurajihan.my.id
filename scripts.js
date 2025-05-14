@@ -63,7 +63,7 @@ function updateCartUI() {
 
     const li = document.createElement('li');
 
-    // Nama produk + harga total item
+    // Nama produk + harga total per item
     const nameSpan = document.createElement('span');
     nameSpan.textContent = `${item.name} - ${formatCurrency(item.price * item.quantity)}`;
     li.appendChild(nameSpan);
