@@ -1,86 +1,150 @@
 const menuData = [
-  { name: "Sate Kambing", price: 18000, priceStr: "Rp 18.000", image: "image/sate-kambing.jpg", detail: "10 tusuk" },
-  { name: "Sate Sapi", price: 18000, priceStr: "Rp 18.000", image: "image/sate-sapi.jpg", detail: "10 tusuk" },
-  { name: "Sate Thaican", price: 18000, priceStr: "Rp 18.000", image: "image/sate-thaican.jpg", detail: "10 tusuk" },
-  { name: "Sate Ayam Campur Kulit", price: 15000, priceStr: "Rp 15.000", image: "image/sate-ayam-kulit.jpg", detail: "10 tusuk" },
-  { name: "Sate Ayam Polos", price: 18000, priceStr: "Rp 18.000", image: "image/sate-ayam.jpg", detail: "10 tusuk" },
-  { name: "Sate Kambing + Lontong", price: 23000, priceStr: "Rp 23.000", image: "image/sate-kambing.jpg", detail: "10 tusuk + 2 buah lontong" },
-  { name: "Sate Sapi + Lontong", price: 23000, priceStr: "Rp 23.000", image: "image/sate-sapi.jpg", detail: "10 tusuk + 2 buah lontong" },
-  { name: "Sate Thaican + Lontong", price: 23000, priceStr: "Rp 23.000", image: "image/sate-thaican.jpg", detail: "10 tusuk + 2 buah lontong" },
-  { name: "Sate Ayam Campur Kulit + Lontong", price: 20000, priceStr: "Rp 20.000", image: "image/sate-ayam-kulit.jpg", detail: "10 tusuk + 2 buah lontong" },
-  { name: "Sate Ayam Polos + Lontong", price: 23000, priceStr: "Rp 23.000", image: "image/sate-ayam.jpg", detail: "10 tusuk + 2 buah lontong" },
-  { name: "Sate Kambing + Nasi", price: 23000, priceStr: "Rp 23.000", image: "image/sate-kambing.jpg", detail: "10 tusuk + 1 bungkus nasi" },
-  { name: "Sate Sapi + Nasi", price: 23000, priceStr: "Rp 23.000", image: "image/sate-sapi.jpg", detail: "10 tusuk + 1 bungkus nasi" },
-  { name: "Sate Thaican + Nasi", price: 20000, priceStr: "Rp 20.000", image: "image/sate-thaican.jpg", detail: "10 tusuk + 1 bungkus nasi" },
-  { name: "Sate Ayam Campur Kulit + Nasi", price: 20000, priceStr: "Rp 20.000", image: "image/sate-ayam-kulit.jpg", detail: "10 tusuk + 1 bungkus nasi" },
-  { name: "Sate Ayam Polos + Nasi", price: 23000, priceStr: "Rp 23.000", image: "image/sate-ayam.jpg", detail: "10 tusuk + 1 bungkus nasi" },
-  { name: "Sate Kambing", price: 27000, priceStr: "Rp 27.000", image: "image/sate-kambing.jpg", detail: "15 tusuk" },
-  { name: "Sate Sapi", price: 27000, priceStr: "Rp 27.000", image: "image/sate-sapi.jpg", detail: "15 tusuk" },
-  { name: "Sate Thaican", price: 23000, priceStr: "Rp 23.000", image: "image/sate-thaican.jpg", detail: "15 tusuk" },
-  { name: "Sate Ayam Campur Kulit", price: 23000, priceStr: "Rp 23.000", image: "image/sate-ayam-kulit.jpg", detail: "15 tusuk" },
-  { name: "Sate Ayam Polos", price: 27000, priceStr: "Rp 27.000", image: "image/sate-ayam.jpg", detail: "15 tusuk" },
-  { name: "Sate Kambing + Lontong", price: 32000, priceStr: "Rp 32.000", image: "image/sate-kambing.jpg", detail: "15 tusuk + 2 buah lontong" },
-  { name: "Sate Sapi + Lontong", price: 32000, priceStr: "Rp 32.000", image: "image/sate-sapi.jpg", detail: "15 tusuk + 2 buah lontong" },
-  { name: "Sate Ayam Polos + Lontong", price: 32000, priceStr: "Rp 32.000", image: "image/sate-ayam.jpg", detail: "15 tusuk + 2 buah lontong" },
-  { name: "Sate Ayam Campur Kulit + Lontong", price: 28000, priceStr: "Rp 28.000", image: "image/sate-ayam-kulit.jpg", detail: "15 tusuk + 2 buah lontong" },
-  { name: "Sate Thaican + Lontong", price: 28000, priceStr: "Rp 28.000", image: "image/sate-thaican.jpg", detail: "15 tusuk + 2 buah lontong" },
-  { name: "Sate Kambing + Nasi", price: 32000, priceStr: "Rp 32.000", image: "image/sate-kambing.jpg", detail: "15 tusuk + 1 bungkus nasi" },
-  { name: "Sate Sapi + Nasi", price: 32000, priceStr: "Rp 32.000", image: "image/sate-sapi.jpg", detail: "15 tusuk + 1 bungkus nasi" },
-  { name: "Sate Ayam Polos + Nasi", price: 32000, priceStr: "Rp 32.000", image: "image/sate-ayam.jpg", detail: "15 tusuk + 1 bungkus nasi" },
-  { name: "Sate Ayam Campur Kulit + Nasi", price: 28000, priceStr: "Rp 28.000", image: "image/sate-ayam-kulit.jpg", detail: "15 tusuk + 1 bungkus nasi" },
-  { name: "Sate Thaican + Nasi", price: 28000, priceStr: "Rp 28.000", image: "image/sate-thaican.jpg", detail: "15 tusuk + 1 bungkus nasi" },
-  { name: "Soto Ayam", price: 15000, priceStr: "Rp 15.000", image: "image/soto-ayam.jpg", detail: "Tanpa tambahan" },
-  { name: "Soto Ayam + Lontong", price: 20000, priceStr: "Rp 20.000", image: "image/soto-ayam.jpg", detail: "Dengan lontong" },
-  { name: "Soto Ayam + Nasi", price: 20000, priceStr: "Rp 20.000", image: "image/soto-ayam.jpg", detail: "Dengan nasi" },
-  { name: "Lontong", price: 5000, priceStr: "Rp 5.000", image: "image/lontong.jpg", detail: "2 buah lontong" },
-  { name: "Nasi", price: 5000, priceStr: "Rp 5.000", image: "image/nasi.jpg", detail: "1 bungkus" },
-  { name: "Kerupuk Udang", price: 2000, priceStr: "Rp 2.000", image: "image/kerupuk-udang.jpg", detail: "1 bungkus" },
-  { name: "Kerupuk Black", price: 2500, priceStr: "Rp 2.500", image: "image/kerupuk-black.jpg", detail: "2 kerupuk" }
+  { name: "Sate Kambing", price: 18000, image: "image/sate-kambing.jpg", detail: "10 tusuk" },
+  { name: "Sate Sapi", price: 18000, image: "image/sate-sapi.jpg", detail: "10 tusuk" },
+  { name: "Sate Thaican", price: 18000, image: "image/sate-thaican.jpg", detail: "10 tusuk" },
+  { name: "Sate Ayam Campur Kulit", price: 15000, image: "image/sate-ayam-kulit.jpg", detail: "10 tusuk" },
+  { name: "Sate Ayam Polos", price: 18000, image: "image/sate-ayam.jpg", detail: "10 tusuk" },
+  { name: "Sate Kambing + Lontong", price: 23000, image: "image/sate-kambing.jpg", detail: "10 tusuk + 2 buah lontong" },
+  { name: "Sate Sapi + Lontong", price: 23000, image: "image/sate-sapi.jpg", detail: "10 tusuk + 2 buah lontong" },
+  { name: "Sate Thaican + Lontong", price: 23000, image: "image/sate-thaican.jpg", detail: "10 tusuk + 2 buah lontong" },
+  { name: "Sate Ayam Campur Kulit + Lontong", price: 20000, image: "image/sate-ayam-kulit.jpg", detail: "10 tusuk + 2 buah lontong" },
+  { name: "Sate Ayam Polos + Lontong", price: 23000, image: "image/sate-ayam.jpg", detail: "10 tusuk + 2 buah lontong" },
+  { name: "Sate Kambing + Nasi", price: 23000, image: "image/sate-kambing.jpg", detail: "10 tusuk + 1 bungkus nasi" },
+  { name: "Sate Sapi + Nasi", price: 23000, image: "image/sate-sapi.jpg", detail: "10 tusuk + 1 bungkus nasi" },
+  { name: "Sate Thaican + Nasi", price: 20000, image: "image/sate-thaican.jpg", detail: "10 tusuk + 1 bungkus nasi" },
+  { name: "Sate Ayam Campur Kulit + Nasi", price: 20000, image: "image/sate-ayam-kulit.jpg", detail: "10 tusuk + 1 bungkus nasi" },
+  { name: "Sate Ayam Polos + Nasi", price: 23000, image: "image/sate-ayam.jpg", detail: "10 tusuk + 1 bungkus nasi" },
+  { name: "Sate Kambing", price: 27000, image: "image/sate-kambing.jpg", detail: "15 tusuk" },
+  { name: "Sate Sapi", price: 27000, image: "image/sate-sapi.jpg", detail: "15 tusuk" },
+  { name: "Sate Thaican", price: 23000, image: "image/sate-thaican.jpg", detail: "15 tusuk" },
+  { name: "Sate Ayam Campur Kulit", price: 23000, image: "image/sate-ayam-kulit.jpg", detail: "15 tusuk" },
+  { name: "Sate Ayam Polos", price: 27000, image: "image/sate-ayam.jpg", detail: "15 tusuk" },
+  { name: "Sate Kambing + Lontong", price: 32000, image: "image/sate-kambing.jpg", detail: "15 tusuk + 2 buah lontong" },
+  { name: "Sate Sapi + Lontong", price: 32000, image: "image/sate-sapi.jpg", detail: "15 tusuk + 2 buah lontong" },
+  { name: "Sate Ayam Polos + Lontong", price: 32000, image: "image/sate-ayam.jpg", detail: "15 tusuk + 2 buah lontong" },
+  { name: "Sate Ayam Campur Kulit + Lontong", price: 28000, image: "image/sate-ayam-kulit.jpg", detail: "15 tusuk + 2 buah lontong" },
+  { name: "Sate Thaican + Lontong", price: 28000, image: "image/sate-thaican.jpg", detail: "15 tusuk + 2 buah lontong" },
+  { name: "Sate Kambing + Nasi", price: 32000, image: "image/sate-kambing.jpg", detail: "15 tusuk + 1 bungkus nasi" },
+  { name: "Sate Sapi + Nasi", price: 32000, image: "image/sate-sapi.jpg", detail: "15 tusuk + 1 bungkus nasi" },
+  { name: "Sate Ayam Polos + Nasi", price: 32000, image: "image/sate-ayam.jpg", detail: "15 tusuk + 1 bungkus nasi" },
+  { name: "Sate Ayam Campur Kulit + Nasi", price: 28000, image: "image/sate-ayam-kulit.jpg", detail: "15 tusuk + 1 bungkus nasi" },
+  { name: "Sate Thaican + Nasi", price: 28000, image: "image/sate-thaican.jpg", detail: "15 tusuk + 1 bungkus nasi" },
+  { name: "Soto Ayam", price: 15000, image: "image/soto-ayam.jpg", detail: "Tanpa tambahan" },
+  { name: "Soto Ayam + Lontong", price: 20000, image: "image/soto-ayam.jpg", detail: "Dengan lontong" },
+  { name: "Soto Ayam + Nasi", price: 20000, image: "image/soto-ayam.jpg", detail: "Dengan nasi" },
+  { name: "Lontong", price: 5000, image: "image/lontong.jpg", detail: "2 buah lontong" },
+  { name: "Nasi", price: 5000, image: "image/nasi.jpg", detail: "1 bungkus" },
+  { name: "Kerupuk Udang", price: 2000, image: "image/kerupuk-udang.jpg", detail: "1 bungkus" },
+  { name: "Kerupuk Black", price: 2500, image: "image/kerupuk-black.jpg", detail: "2 kerupuk" }
 ];
 
-let cart = [];
+let cartItems = [];
 
-window.addEventListener('DOMContentLoaded', () => {
-  const menuList = document.getElementById('menuList');
+function formatCurrency(num) {
+  return "Rp " + num.toLocaleString("id-ID");
+}
+
+function updateCartCount() {
+  const cartCount = document.getElementById('cartCount');
+  let totalCount = 0;
+  cartItems.forEach(item => {
+    totalCount += item.quantity;
+  });
+  cartCount.textContent = totalCount;
+}
+
+function updateCartUI() {
   const cartList = document.getElementById('cartList');
   const cartTotal = document.getElementById('cartTotal');
-  const clearCartBtn = document.getElementById('clearCartBtn');
+  cartList.innerHTML = "";
 
-  function renderCart() {
-    cartList.innerHTML = '';
-    let total = 0;
-    cart.forEach(cartItem => {
-      const li = document.createElement('li');
-      li.textContent = `${cartItem.item.name} x${cartItem.qty}`;
-      const priceSpan = document.createElement('span');
-      priceSpan.textContent = `Rp ${(cartItem.item.price * cartItem.qty).toLocaleString('id-ID')}`;
-      li.appendChild(priceSpan);
-      cartList.appendChild(li);
-      total += cartItem.item.price * cartItem.qty;
+  let totalPrice = 0;
+
+  cartItems.forEach((item, index) => {
+    totalPrice += item.price * item.quantity;
+
+    const li = document.createElement('li');
+
+    const nameSpan = document.createElement('span');
+    nameSpan.textContent = `${item.name} - ${formatCurrency(item.price)}`;
+    li.appendChild(nameSpan);
+
+    // Button decrement
+    const decBtn = document.createElement('button');
+    decBtn.textContent = "-";
+    decBtn.setAttribute('aria-label', `Kurangi jumlah ${item.name}`);
+    decBtn.addEventListener('click', () => {
+      if (item.quantity > 1) {
+        item.quantity--;
+      } else {
+        cartItems.splice(index, 1);
+      }
+      updateCartCount();
+      updateCartUI();
     });
-    cartTotal.textContent = `Total: Rp ${total.toLocaleString('id-ID')}`;
-  }
+    li.appendChild(decBtn);
 
-  function addToCart(item) {
-    const found = cart.find(ci => ci.item.name === item.name);
-    if (found) {
-      found.qty++;
-    } else {
-      cart.push({ item, qty: 1 });
-    }
-    renderCart();
+    // Quantity text
+    const qtySpan = document.createElement('span');
+    qtySpan.textContent = item.quantity;
+    qtySpan.setAttribute('aria-label', `Jumlah ${item.name}`);
+    qtySpan.style.margin = "0 8px";
+    li.appendChild(qtySpan);
+
+    // Button increment
+    const incBtn = document.createElement('button');
+    incBtn.textContent = "+";
+    incBtn.setAttribute('aria-label', `Tambah jumlah ${item.name}`);
+    incBtn.addEventListener('click', () => {
+      item.quantity++;
+      updateCartCount();
+      updateCartUI();
+    });
+    li.appendChild(incBtn);
+
+    // Button remove
+    const remBtn = document.createElement('button');
+    remBtn.textContent = "✕";
+    remBtn.setAttribute('aria-label', `Hapus ${item.name} dari keranjang`);
+    remBtn.addEventListener('click', () => {
+      cartItems.splice(index, 1);
+      updateCartCount();
+      updateCartUI();
+    });
+    li.appendChild(remBtn);
+
+    cartList.appendChild(li);
+  });
+
+  cartTotal.textContent = `Total: ${formatCurrency(totalPrice)}`;
+}
+
+function addToCart(item) {
+  const index = cartItems.findIndex(i => i.name === item.name);
+  if (index >= 0) {
+    cartItems[index].quantity += 1;
+  } else {
+    cartItems.push({ ...item, quantity: 1 });
   }
+  updateCartCount();
+  updateCartUI();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const menuList = document.getElementById('menuList');
 
   menuData.forEach(item => {
     const li = document.createElement('li');
     li.className = 'menu-item';
     li.tabIndex = 0;
 
-    const img = document.createElement('img');
-    img.src = item.image;
-    img.alt = item.name;
-    img.className = 'menu-image';
-    li.appendChild(img);
+    if (item.image) {
+      const img = document.createElement('img');
+      img.src = item.image;
+      img.alt = item.name;
+      img.className = 'menu-image';
+      li.appendChild(img);
+    }
 
     const desc = document.createElement('p');
     desc.textContent = item.name;
@@ -88,7 +152,7 @@ window.addEventListener('DOMContentLoaded', () => {
     li.appendChild(desc);
 
     const price = document.createElement('p');
-    price.textContent = item.priceStr;
+    price.textContent = formatCurrency(item.price);
     price.className = 'price';
     li.appendChild(price);
 
@@ -99,19 +163,19 @@ window.addEventListener('DOMContentLoaded', () => {
       li.appendChild(note);
     }
 
-    const addBtn = document.createElement('button');
-    addBtn.textContent = 'Tambah ke Keranjang';
-    addBtn.className = 'add-to-cart-btn';
-    addBtn.addEventListener('click', () => addToCart(item));
-    li.appendChild(addBtn);
+    const btn = document.createElement('button');
+    btn.textContent = "Tambah ke Keranjang";
+    btn.className = "btn-add-cart";
+    btn.addEventListener('click', () => addToCart(item));
+    li.appendChild(btn);
 
     menuList.appendChild(li);
   });
 
-  clearCartBtn.addEventListener('click', () => {
-    cart = [];
-    renderCart();
+  // Clear cart button
+  document.getElementById('clearCartBtn').addEventListener('click', () => {
+    cartItems = [];
+    updateCartCount();
+    updateCartUI();
   });
-
-  renderCart();
 });

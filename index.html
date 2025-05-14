@@ -9,25 +9,43 @@
   <script type="module" src="https://cdn.jsdelivr.net/gh/domyid/tracker@main/index.js"></script>
 </head>
 <body>
+
   <nav>
-    <a href="https://maps.app.goo.gl/GLosJmV7v6x84nq76" target="_blank" rel="noopener noreferrer" aria-label="Link ke lokasi UMKM pada Google Maps">Peta Lokasi</a>
-    <a href="https://wa.me/14155238886?text=join%20actually-depth" target="_blank" rel="noopener noreferrer" aria-label="Chat di WhatsApp dengan Warung Sate Ayam Madura Jihan">Contact</a>
+    <div class="nav-container">
+      <a href="#" class="nav-link">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#menu" class="nav-link">Menu</a>
+      <a href="#" class="nav-link cart-link" aria-label="Lihat Keranjang Belanja">
+        🛒 <span id="cartCount" class="cart-count">0</span>
+      </a>
+      <a href="https://maps.app.goo.gl/GLosJmV7v6x84nq76" target="_blank" rel="noopener noreferrer" class="nav-link">Peta Lokasi</a>
+      <a href="https://wa.me/14155238886?text=join%20actually-depth" target="_blank" rel="noopener noreferrer" class="nav-link contact-link">Contact</a>
+    </div>
   </nav>
 
   <header>
     <h1>Sate Ayam Madura Jihan</h1>
-    <p>Sate Ayam Madura Jihan, menghadirkan cita rasa autentik Madura yang lezat dan gurih, siap memanjakan lidah dengan rempah tradisional dan bahan pilihan berkualitas.</p>
+    <p>Lezat &amp; Otentik, Sajian Sate Madura Asli yang Membuat Lidah Bergoyang</p>
   </header>
 
   <main>
-    <h2>Menu Spesial</h2>
-    <ul id="menuList" class="menu-list" tabindex="0" aria-label="Daftar menu Sate Ayam Madura Jihan"></ul>
+    <section id="about" tabindex="0" aria-label="Tentang Sate Ayam Madura Jihan" style="padding: 20px;">
+      <h2>Tentang Kami</h2>
+      <p>
+        Kami menyajikan sate ayam Madura asli dengan resep turun-temurun, menggunakan bahan berkualitas dan bumbu rahasia yang kaya rasa. Nikmati cita rasa autentik yang tidak akan Anda temukan di tempat lain.
+      </p>
+    </section>
+
+    <section id="menu" tabindex="0" aria-label="Daftar Menu Spesial Sate Ayam Madura Jihan">
+      <h2>Menu Spesial</h2>
+      <ul id="menuList" class="menu-list"></ul>
+    </section>
 
     <section id="cartSection" class="cart-section" aria-label="Keranjang Belanja">
       <h2>Keranjang Belanja</h2>
-      <ul id="cartList" class="cart-list" aria-live="polite" aria-relevant="additions removals"></ul>
-      <p id="cartTotal" class="cart-total">Total: Rp 0</p>
-      <button id="clearCartBtn" class="btn-clear-cart" aria-label="Kosongkan Keranjang Belanja">Kosongkan Keranjang</button>
+      <ul id="cartList" class="cart-list"></ul>
+      <p id="cartTotal">Total: Rp 0</p>
+      <button id="clearCartBtn">Kosongkan Keranjang</button>
     </section>
   </main>
 
