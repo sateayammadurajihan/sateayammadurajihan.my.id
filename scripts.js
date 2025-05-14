@@ -38,154 +38,144 @@ const menuData = [
   { name: "Kerupuk Black", price: 2500, image: "image/kerupuk-black.jpg", detail: "2 kerupuk" }
 ];
 
-const cart = [];
+let cartItems = [];
 
-const menuGrid = document.getElementById('menuGrid');
-const checkoutList = document.getElementById('checkoutList');
-const checkoutTotal = document.getElementById('checkoutTotal');
-const checkoutBtn = document.getElementById('checkoutBtn');
-const cartCountNav = document.getElementById('cartCountNav');
-
-function formatPrice(price) {
-  return `Rp ${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`;
+function formatCurrency(num) {
+  return "Rp " + num.toLocaleString("id-ID");
 }
 
-function renderMenu() {
-  menuGrid.innerHTML = '';
-  menuData.forEach((item, index) => {
-    const div = document.createElement('div');
-    div.className = 'menu-item';
-    div.tabIndex = 0;
+function updateCartCount() {
+  const cartCount = document.getElementById('cartCount');
+  let totalCount = 0;
+  cartItems.forEach(item => {
+    totalCount += item.quantity;
+  });
+  cartCount.textContent = totalCount;
+}
 
-    const img = document.createElement('img');
-    img.src = item.image;
-    img.alt = item.name;
-    img.className = 'menu-image';
+function updateCartUI() {
+  const cartList = document.getElementById('cartList');
+  const cartTotal = document.getElementById('cartTotal');
+  cartList.innerHTML = "";
+
+  let totalPrice = 0;
+
+  cartItems.forEach((item, index) => {
+    totalPrice += item.price * item.quantity;
+
+    const li = document.createElement('li');
+
+    const nameSpan = document.createElement('span');
+    nameSpan.textContent = `${item.name} - ${formatCurrency(item.price)}`;
+    li.appendChild(nameSpan);
+
+    // Button decrement
+    const decBtn = document.createElement('button');
+    decBtn.textContent = "-";
+    decBtn.setAttribute('aria-label', `Kurangi jumlah ${item.name}`);
+    decBtn.addEventListener('click', () => {
+      if (item.quantity > 1) {
+        item.quantity--;
+      } else {
+        cartItems.splice(index, 1);
+      }
+      updateCartCount();
+      updateCartUI();
+    });
+    li.appendChild(decBtn);
+
+    // Quantity text
+    const qtySpan = document.createElement('span');
+    qtySpan.textContent = item.quantity;
+    qtySpan.setAttribute('aria-label', `Jumlah ${item.name}`);
+    qtySpan.style.margin = "0 8px";
+    li.appendChild(qtySpan);
+
+    // Button increment
+    const incBtn = document.createElement('button');
+    incBtn.textContent = "+";
+    incBtn.setAttribute('aria-label', `Tambah jumlah ${item.name}`);
+    incBtn.addEventListener('click', () => {
+      item.quantity++;
+      updateCartCount();
+      updateCartUI();
+    });
+    li.appendChild(incBtn);
+
+    // Button remove
+    const remBtn = document.createElement('button');
+    remBtn.textContent = "✕";
+    remBtn.setAttribute('aria-label', `Hapus ${item.name} dari keranjang`);
+    remBtn.addEventListener('click', () => {
+      cartItems.splice(index, 1);
+      updateCartCount();
+      updateCartUI();
+    });
+    li.appendChild(remBtn);
+
+    cartList.appendChild(li);
+  });
+
+  cartTotal.textContent = `Total: ${formatCurrency(totalPrice)}`;
+}
+
+function addToCart(item) {
+  const index = cartItems.findIndex(i => i.name === item.name);
+  if (index >= 0) {
+    cartItems[index].quantity += 1;
+  } else {
+    cartItems.push({ ...item, quantity: 1 });
+  }
+  updateCartCount();
+  updateCartUI();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const menuList = document.getElementById('menuList');
+
+  menuData.forEach(item => {
+    const li = document.createElement('li');
+    li.className = 'menu-item';
+    li.tabIndex = 0;
+
+    if (item.image) {
+      const img = document.createElement('img');
+      img.src = item.image;
+      img.alt = item.name;
+      img.className = 'menu-image';
+      li.appendChild(img);
+    }
 
     const desc = document.createElement('p');
     desc.textContent = item.name;
     desc.className = 'description';
+    li.appendChild(desc);
 
     const price = document.createElement('p');
-    price.textContent = formatPrice(item.price);
+    price.textContent = formatCurrency(item.price);
     price.className = 'price';
+    li.appendChild(price);
 
-    const note = document.createElement('p');
-    note.textContent = item.detail;
-    note.className = 'note';
+    if (item.detail) {
+      const note = document.createElement('p');
+      note.textContent = item.detail;
+      note.className = 'note';
+      li.appendChild(note);
+    }
 
     const btn = document.createElement('button');
-    btn.textContent = 'Tambah ke Keranjang';
-    btn.addEventListener('click', () => addToCart(index));
+    btn.textContent = "Tambah ke Keranjang";
+    btn.className = "btn-add-cart";
+    btn.addEventListener('click', () => addToCart(item));
+    li.appendChild(btn);
 
-    div.append(img, desc, price, note, btn);
-    menuGrid.appendChild(div);
-  });
-}
-
-function renderCheckout() {
-  checkoutList.innerHTML = '';
-  let total = 0;
-  cart.forEach((item, index) => {
-    total += item.price * item.qty;
-
-    const li = document.createElement('li');
-    li.textContent = `${item.name} - ${formatPrice(item.price)} × ${item.qty}`;
-
-    const minusBtn = document.createElement('button');
-    minusBtn.textContent = '-';
-    minusBtn.addEventListener('click', () => {
-      if(item.qty > 1) {
-        item.qty--;
-      } else {
-        cart.splice(index, 1);
-      }
-      updateCart();
-    });
-
-    const plusBtn = document.createElement('button');
-    plusBtn.textContent = '+';
-    plusBtn.addEventListener('click', () => {
-      item.qty++;
-      updateCart();
-    });
-
-    const delBtn = document.createElement('button');
-    delBtn.textContent = '×';
-    delBtn.addEventListener('click', () => {
-      cart.splice(index, 1);
-      updateCart();
-    });
-
-    li.appendChild(minusBtn);
-    li.appendChild(plusBtn);
-    li.appendChild(delBtn);
-
-    checkoutList.appendChild(li);
+    menuList.appendChild(li);
   });
 
-  checkoutTotal.textContent = `Total: ${formatPrice(total)}`;
-  cartCountNav.textContent = `(${cart.reduce((acc, cur) => acc + cur.qty, 0)})`;
-}
-
-function addToCart(index) {
-  const item = menuData[index];
-  const existing = cart.find(c => c.name === item.name);
-
-  if(existing) {
-    existing.qty++;
-  } else {
-    cart.push({...item, qty: 1});
-  }
-  updateCart();
-}
-
-function updateCart() {
-  renderCheckout();
-}
-
-checkoutBtn.addEventListener('click', () => {
-  if(cart.length === 0) {
-    alert('Keranjang masih kosong!');
-    return;
-  }
-
-  // Buat pesan WA otomatis
-  let message = 'Pesanan saya:%0A';
-  cart.forEach(item => {
-    message += `- ${item.name} x${item.qty} = ${formatPrice(item.price * item.qty)}%0A`;
-  });
-  message += `Total: ${formatPrice(cart.reduce((acc, cur) => acc + cur.price * cur.qty, 0))}`;
-
-  // Buka WA
-  const waLink = `https://wa.me/62882000611588?text=${message}`;
-  window.open(waLink, '_blank');
-});
-
-window.addEventListener('DOMContentLoaded', () => {
-  renderMenu();
-
-  // Navigasi antar halaman
-  const navLinks = document.querySelectorAll('.nav-link');
-  const sections = document.querySelectorAll('.page-section');
-
-  navLinks.forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-
-      // Hilangkan kelas aktif di semua link dan section
-      navLinks.forEach(l => l.classList.remove('active'));
-      sections.forEach(sec => sec.classList.remove('active'));
-
-      // Aktifkan yang diklik
-      link.classList.add('active');
-      const targetId = link.getAttribute('data-target');
-      document.getElementById(targetId).classList.add('active');
-
-      // Jika pindah ke checkout render ulang keranjang
-      if(targetId === 'checkoutSection') {
-        renderCheckout();
-      }
-    });
+  // Clear cart button
+  document.getElementById('clearCartBtn').addEventListener('click', () => {
+    cartItems = [];
+    updateCartCount();
+    updateCartUI();
   });
 });
