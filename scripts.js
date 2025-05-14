@@ -1,48 +1,39 @@
 const menuData = [
-  { name: "Sate Ayam Polos 10 Tusuk", price: 15000, image: "image/sate-ayam.jpg", detail: "10 tusuk" },
-  { name: "Sate Ayam Campur Kulit 10 Tusuk", price: 15000, image: "image/sate-ayam-kulit.jpg", detail: "10 tusuk" },
-  { name: "Sate Thaican 10 Tusuk", price: 18000, image: "image/sate-thaican.jpg", detail: "10 tusuk" },
-  { name: "Sate Sapi 10 Tusuk", price: 18000, image: "image/sate-sapi.jpg", detail: "10 tusuk" },
-  { name: "Sate Kambing 10 Tusuk", price: 18000, image: "image/sate-kambing.jpg", detail: "10 tusuk" },
-
-  { name: "Sate Ayam Polos 15 Tusuk", price: 27000, image: "image/sate-ayam.jpg", detail: "15 tusuk" },
-  { name: "Sate Ayam Campur Kulit 15 Tusuk", price: 23000, image: "image/sate-ayam-kulit.jpg", detail: "15 tusuk" },
-  { name: "Sate Thaican 15 Tusuk", price: 23000, image: "image/sate-thaican.jpg", detail: "15 tusuk" },
-  { name: "Sate Sapi 15 Tusuk", price: 27000, image: "image/sate-sapi.jpg", detail: "15 tusuk" },
-  { name: "Sate Kambing 15 Tusuk", price: 27000, image: "image/sate-kambing.jpg", detail: "15 tusuk" },
-
-  { name: "Lontong", price: 5000, image: "image/lontong.jpg", detail: "2 buah lontong" },
-
-  { name: "Sate Ayam Polos 10 Tusuk + Lontong", price: 20000, image: "image/sate-ayam.jpg", detail: "10 tusuk + 2 buah lontong" },
-  { name: "Sate Ayam Campur Kulit 10 Tusuk + Lontong", price: 20000, image: "image/sate-ayam-kulit.jpg", detail: "10 tusuk + 2 buah lontong" },
-  { name: "Sate Thaican 10 Tusuk + Lontong", price: 23000, image: "image/sate-thaican.jpg", detail: "10 tusuk + 2 buah lontong" },
-  { name: "Sate Sapi 10 Tusuk + Lontong", price: 23000, image: "image/sate-sapi.jpg", detail: "10 tusuk + 2 buah lontong" },
-  { name: "Sate Kambing 10 Tusuk + Lontong", price: 23000, image: "image/sate-kambing.jpg", detail: "10 tusuk + 2 buah lontong" },
-
-  { name: "Sate Ayam Polos 15 Tusuk + Lontong", price: 28000, image: "image/sate-ayam.jpg", detail: "15 tusuk + 2 buah lontong" },
-  { name: "Sate Ayam Campur Kulit 15 Tusuk + Lontong", price: 28000, image: "image/sate-ayam-kulit.jpg", detail: "15 tusuk + 2 buah lontong" },
-  { name: "Sate Thaican 15 Tusuk + Lontong", price: 28000, image: "image/sate-thaican.jpg", detail: "15 tusuk + 2 buah lontong" },
-  { name: "Sate Sapi 15 Tusuk + Lontong", price: 32000, image: "image/sate-sapi.jpg", detail: "15 tusuk + 2 buah lontong" },
-  { name: "Sate Kambing 15 Tusuk + Lontong", price: 32000, image: "image/sate-kambing.jpg", detail: "15 tusuk + 2 buah lontong" },
-
-  { name: "Nasi", price: 5000, image: "image/nasi.jpg", detail: "1 bungkus" },
-
-  { name: "Sate Ayam Polos 10 Tusuk + Nasi", price: 20000, image: "image/sate-ayam.jpg", detail: "10 tusuk + 1 bungkus nasi" },
-  { name: "Sate Ayam Campur Kulit 10 Tusuk + Nasi", price: 20000, image: "image/sate-ayam-kulit.jpg", detail: "10 tusuk + 1 bungkus nasi" },
-  { name: "Sate Thaican 10 Tusuk + Nasi", price: 23000, image: "image/sate-thaican.jpg", detail: "10 tusuk + 1 bungkus nasi" },
-  { name: "Sate Sapi 10 Tusuk + Nasi", price: 23000, image: "image/sate-sapi.jpg", detail: "10 tusuk + 1 bungkus nasi" },
-  { name: "Sate Kambing 10 Tusuk + Nasi", price: 23000, image: "image/sate-kambing.jpg", detail: "10 tusuk + 1 bungkus nasi" },
-
-  { name: "Sate Ayam Polos 15 Tusuk + Nasi", price: 32000, image: "image/sate-ayam.jpg", detail: "15 tusuk + 1 bungkus nasi" },
-  { name: "Sate Ayam Campur Kulit 15 Tusuk + Nasi", price: 28000, image: "image/sate-ayam-kulit.jpg", detail: "15 tusuk + 1 bungkus nasi" },
-  { name: "Sate Thaican 15 Tusuk + Nasi", price: 28000, image: "image/sate-thaican.jpg", detail: "15 tusuk + 1 bungkus nasi" },
-  { name: "Sate Sapi 15 Tusuk + Nasi", price: 32000, image: "image/sate-sapi.jpg", detail: "15 tusuk + 1 bungkus nasi" },
-  { name: "Sate Kambing 15 Tusuk + Nasi", price: 32000, image: "image/sate-kambing.jpg", detail: "15 tusuk + 1 bungkus nasi" },
-
+  { name: "Sate Kambing", price: 18000, image: "image/sate-kambing.jpg", detail: "10 tusuk" },
+  { name: "Sate Sapi", price: 18000, image: "image/sate-sapi.jpg", detail: "10 tusuk" },
+  { name: "Sate Thaican", price: 18000, image: "image/sate-thaican.jpg", detail: "10 tusuk" },
+  { name: "Sate Ayam Campur Kulit", price: 15000, image: "image/sate-ayam-kulit.jpg", detail: "10 tusuk" },
+  { name: "Sate Ayam Polos", price: 18000, image: "image/sate-ayam.jpg", detail: "10 tusuk" },
+  { name: "Sate Kambing + Lontong", price: 23000, image: "image/sate-kambing.jpg", detail: "10 tusuk + 2 buah lontong" },
+  { name: "Sate Sapi + Lontong", price: 23000, image: "image/sate-sapi.jpg", detail: "10 tusuk + 2 buah lontong" },
+  { name: "Sate Thaican + Lontong", price: 23000, image: "image/sate-thaican.jpg", detail: "10 tusuk + 2 buah lontong" },
+  { name: "Sate Ayam Campur Kulit + Lontong", price: 20000, image: "image/sate-ayam-kulit.jpg", detail: "10 tusuk + 2 buah lontong" },
+  { name: "Sate Ayam Polos + Lontong", price: 23000, image: "image/sate-ayam.jpg", detail: "10 tusuk + 2 buah lontong" },
+  { name: "Sate Kambing + Nasi", price: 23000, image: "image/sate-kambing.jpg", detail: "10 tusuk + 1 bungkus nasi" },
+  { name: "Sate Sapi + Nasi", price: 23000, image: "image/sate-sapi.jpg", detail: "10 tusuk + 1 bungkus nasi" },
+  { name: "Sate Thaican + Nasi", price: 20000, image: "image/sate-thaican.jpg", detail: "10 tusuk + 1 bungkus nasi" },
+  { name: "Sate Ayam Campur Kulit + Nasi", price: 20000, image: "image/sate-ayam-kulit.jpg", detail: "10 tusuk + 1 bungkus nasi" },
+  { name: "Sate Ayam Polos + Nasi", price: 23000, image: "image/sate-ayam.jpg", detail: "10 tusuk + 1 bungkus nasi" },
+  { name: "Sate Kambing", price: 27000, image: "image/sate-kambing.jpg", detail: "15 tusuk" },
+  { name: "Sate Sapi", price: 27000, image: "image/sate-sapi.jpg", detail: "15 tusuk" },
+  { name: "Sate Thaican", price: 23000, image: "image/sate-thaican.jpg", detail: "15 tusuk" },
+  { name: "Sate Ayam Campur Kulit", price: 23000, image: "image/sate-ayam-kulit.jpg", detail: "15 tusuk" },
+  { name: "Sate Ayam Polos", price: 27000, image: "image/sate-ayam.jpg", detail: "15 tusuk" },
+  { name: "Sate Kambing + Lontong", price: 32000, image: "image/sate-kambing.jpg", detail: "15 tusuk + 2 buah lontong" },
+  { name: "Sate Sapi + Lontong", price: 32000, image: "image/sate-sapi.jpg", detail: "15 tusuk + 2 buah lontong" },
+  { name: "Sate Ayam Polos + Lontong", price: 32000, image: "image/sate-ayam.jpg", detail: "15 tusuk + 2 buah lontong" },
+  { name: "Sate Ayam Campur Kulit + Lontong", price: 28000, image: "image/sate-ayam-kulit.jpg", detail: "15 tusuk + 2 buah lontong" },
+  { name: "Sate Thaican + Lontong", price: 28000, image: "image/sate-thaican.jpg", detail: "15 tusuk + 2 buah lontong" },
+  { name: "Sate Kambing + Nasi", price: 32000, image: "image/sate-kambing.jpg", detail: "15 tusuk + 1 bungkus nasi" },
+  { name: "Sate Sapi + Nasi", price: 32000, image: "image/sate-sapi.jpg", detail: "15 tusuk + 1 bungkus nasi" },
+  { name: "Sate Ayam Polos + Nasi", price: 32000, image: "image/sate-ayam.jpg", detail: "15 tusuk + 1 bungkus nasi" },
+  { name: "Sate Ayam Campur Kulit + Nasi", price: 28000, image: "image/sate-ayam-kulit.jpg", detail: "15 tusuk + 1 bungkus nasi" },
+  { name: "Sate Thaican + Nasi", price: 28000, image: "image/sate-thaican.jpg", detail: "15 tusuk + 1 bungkus nasi" },
   { name: "Soto Ayam", price: 15000, image: "image/soto-ayam.jpg", detail: "Tanpa tambahan" },
   { name: "Soto Ayam + Lontong", price: 20000, image: "image/soto-ayam.jpg", detail: "Dengan lontong" },
   { name: "Soto Ayam + Nasi", price: 20000, image: "image/soto-ayam.jpg", detail: "Dengan nasi" },
-
+  { name: "Lontong", price: 5000, image: "image/lontong.jpg", detail: "2 buah lontong" },
+  { name: "Nasi", price: 5000, image: "image/nasi.jpg", detail: "1 bungkus" },
   { name: "Kerupuk Udang", price: 2000, image: "image/kerupuk-udang.jpg", detail: "1 bungkus" },
   { name: "Kerupuk Black", price: 2500, image: "image/kerupuk-black.jpg", detail: "2 kerupuk" }
 ];
@@ -55,11 +46,13 @@ function formatCurrency(num) {
 
 function updateCartCount() {
   const cartCount = document.getElementById('cartCount');
+  const cartCountNav = document.getElementById('cartCountNav');
   let totalCount = 0;
   cartItems.forEach(item => {
     totalCount += item.quantity;
   });
-  cartCount.textContent = totalCount;
+  if (cartCount) cartCount.textContent = totalCount;
+  if (cartCountNav) cartCountNav.textContent = `(${totalCount})`;
 }
 
 function updateCartUI() {
@@ -125,7 +118,7 @@ function updateCartUI() {
     cartList.appendChild(li);
   });
 
-  cartTotal.textContent = `Total: ${formatCurrency(totalPrice)}`;
+  if (cartTotal) cartTotal.textContent = `Total: ${formatCurrency(totalPrice)}`;
 }
 
 function addToCart(item) {
@@ -137,6 +130,19 @@ function addToCart(item) {
   }
   updateCartCount();
   updateCartUI();
+}
+
+function generateWhatsAppMessage() {
+  if (cartItems.length === 0) return "";
+
+  let pesan = "Halo, saya ingin memesan:\n";
+  cartItems.forEach(item => {
+    pesan += `- ${item.name} x${item.quantity} = ${formatCurrency(item.price * item.quantity)}\n`;
+  });
+  let totalHarga = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  pesan += `Total: ${formatCurrency(totalHarga)}\n\nTerima kasih, saya tunggu konfirmasi pesanan dari Anda. 😊`;
+
+  return encodeURIComponent(pesan);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -182,9 +188,30 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Clear cart button
-  document.getElementById('clearCartBtn').addEventListener('click', () => {
-    cartItems = [];
-    updateCartCount();
-    updateCartUI();
-  });
+  const clearCartBtn = document.getElementById('clearCartBtn');
+  if (clearCartBtn) {
+    clearCartBtn.addEventListener('click', () => {
+      cartItems = [];
+      updateCartCount();
+      updateCartUI();
+    });
+  }
+
+  // Checkout via WhatsApp button
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', () => {
+      if (cartItems.length === 0) {
+        alert("Keranjang belanja kosong!");
+        return;
+      }
+      const nomorWA = "6285759858593"; // nomor WA penjual (ganti sesuai nomor kamu)
+      const pesanWA = generateWhatsAppMessage();
+      const urlWA = `https://wa.me/${nomorWA}?text=${pesanWA}`;
+      window.open(urlWA, '_blank');
+    });
+  }
+
+  updateCartCount();
+  updateCartUI();
 });
