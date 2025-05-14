@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("Keranjang belanja kosong!");
         return;
       }
-      const nomorWA = "6285759858593"; // nomor WA penjual (ganti sesuai nomor kamu)
+      const nomorWA = "6285759858593"; 
       const pesanWA = generateWhatsAppMessage();
       const urlWA = `https://wa.me/${nomorWA}?text=${pesanWA}`;
       window.open(urlWA, '_blank');
