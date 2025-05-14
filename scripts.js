@@ -51,8 +51,8 @@ function updateCartCount() {
   cartItems.forEach(item => {
     totalCount += item.quantity;
   });
-  if (cartCount) cartCount.textContent = totalCount;
-  if (cartCountNav) cartCountNav.textContent = `(${totalCount})`;
+  if(cartCount) cartCount.textContent = totalCount;
+  if(cartCountNav) cartCountNav.textContent = `(${totalCount})`;
 }
 
 function updateCartUI() {
@@ -118,7 +118,7 @@ function updateCartUI() {
     cartList.appendChild(li);
   });
 
-  if (cartTotal) cartTotal.textContent = `Total: ${formatCurrency(totalPrice)}`;
+  if(cartTotal) cartTotal.textContent = `Total: ${formatCurrency(totalPrice)}`;
 }
 
 function addToCart(item) {
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Clear cart button
   const clearCartBtn = document.getElementById('clearCartBtn');
-  if (clearCartBtn) {
+  if(clearCartBtn) {
     clearCartBtn.addEventListener('click', () => {
       cartItems = [];
       updateCartCount();
@@ -199,13 +199,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Checkout via WhatsApp button
   const checkoutBtn = document.getElementById('checkoutBtn');
-  if (checkoutBtn) {
+  if(checkoutBtn) {
     checkoutBtn.addEventListener('click', () => {
-      if (cartItems.length === 0) {
+      if(cartItems.length === 0) {
         alert("Keranjang belanja kosong!");
         return;
       }
-      const nomorWA = "6285759858593"; 
+      const nomorWA = "6285759858593"; // nomor WA tanpa tanda +
       const pesanWA = generateWhatsAppMessage();
       const urlWA = `https://wa.me/${nomorWA}?text=${pesanWA}`;
       window.open(urlWA, '_blank');
