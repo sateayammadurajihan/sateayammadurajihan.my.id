@@ -46,13 +46,11 @@ function formatCurrency(num) {
 
 function updateCartCount() {
   const cartCount = document.getElementById('cartCount');
-  const cartCountNav = document.getElementById('cartCountNav');
   let totalCount = 0;
   cartItems.forEach(item => {
     totalCount += item.quantity;
   });
-  if(cartCount) cartCount.textContent = totalCount;
-  if(cartCountNav) cartCountNav.textContent = `(${totalCount})`;
+  cartCount.textContent = totalCount;
 }
 
 function updateCartUI() {
@@ -118,7 +116,7 @@ function updateCartUI() {
     cartList.appendChild(li);
   });
 
-  if(cartTotal) cartTotal.textContent = `Total: ${formatCurrency(totalPrice)}`;
+  cartTotal.textContent = `Total: ${formatCurrency(totalPrice)}`;
 }
 
 function addToCart(item) {
@@ -130,19 +128,6 @@ function addToCart(item) {
   }
   updateCartCount();
   updateCartUI();
-}
-
-function generateWhatsAppMessage() {
-  if (cartItems.length === 0) return "";
-
-  let pesan = "Halo, saya ingin memesan:\n";
-  cartItems.forEach(item => {
-    pesan += `- ${item.name} x${item.quantity} = ${formatCurrency(item.price * item.quantity)}\n`;
-  });
-  let totalHarga = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  pesan += `Total: ${formatCurrency(totalHarga)}\n\nTerima kasih, saya tunggu konfirmasi pesanan dari Anda. 😊`;
-
-  return encodeURIComponent(pesan);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -188,30 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Clear cart button
-  const clearCartBtn = document.getElementById('clearCartBtn');
-  if(clearCartBtn) {
-    clearCartBtn.addEventListener('click', () => {
-      cartItems = [];
-      updateCartCount();
-      updateCartUI();
-    });
-  }
-
-  // Checkout via WhatsApp button
-  const checkoutBtn = document.getElementById('checkoutBtn');
-  if(checkoutBtn) {
-    checkoutBtn.addEventListener('click', () => {
-      if(cartItems.length === 0) {
-        alert("Keranjang belanja kosong!");
-        return;
-      }
-      const nomorWA = "6285759858593"; // nomor WA tanpa tanda +
-      const pesanWA = generateWhatsAppMessage();
-      const urlWA = `https://wa.me/${nomorWA}?text=${pesanWA}`;
-      window.open(urlWA, '_blank');
-    });
-  }
-
-  updateCartCount();
-  updateCartUI();
+  document.getElementById('clearCartBtn').addEventListener('click', () => {
+    cartItems = [];
+    updateCartCount();
+    updateCartUI();
+  });
 });
