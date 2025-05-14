@@ -62,9 +62,46 @@ function updateCartUI() {
     totalPrice += item.price * item.quantity;
 
     const li = document.createElement('li');
-    li.textContent = `${item.name} x${item.quantity} - ${formatCurrency(item.price * item.quantity)}`;
 
-    // Buat tombol remove sederhana
+    // Nama produk + harga total item
+    const nameSpan = document.createElement('span');
+    nameSpan.textContent = `${item.name} - ${formatCurrency(item.price * item.quantity)}`;
+    li.appendChild(nameSpan);
+
+    // Button decrement (-)
+    const decBtn = document.createElement('button');
+    decBtn.textContent = "-";
+    decBtn.setAttribute('aria-label', `Kurangi jumlah ${item.name}`);
+    decBtn.addEventListener('click', () => {
+      if (item.quantity > 1) {
+        item.quantity--;
+      } else {
+        cartItems.splice(index, 1);
+      }
+      updateCartCount();
+      updateCartUI();
+    });
+    li.appendChild(decBtn);
+
+    // Teks jumlah
+    const qtySpan = document.createElement('span');
+    qtySpan.textContent = item.quantity;
+    qtySpan.setAttribute('aria-label', `Jumlah ${item.name}`);
+    qtySpan.style.margin = "0 8px";
+    li.appendChild(qtySpan);
+
+    // Button increment (+)
+    const incBtn = document.createElement('button');
+    incBtn.textContent = "+";
+    incBtn.setAttribute('aria-label', `Tambah jumlah ${item.name}`);
+    incBtn.addEventListener('click', () => {
+      item.quantity++;
+      updateCartCount();
+      updateCartUI();
+    });
+    li.appendChild(incBtn);
+
+    // Button remove (✕)
     const remBtn = document.createElement('button');
     remBtn.textContent = "✕";
     remBtn.setAttribute('aria-label', `Hapus ${item.name} dari keranjang`);
