@@ -66,13 +66,13 @@ function updateCartUI() {
     const li = document.createElement('li');
 
     const nameSpan = document.createElement('span');
-    nameSpan.textContent = `${item.name} - ${formatCurrency(item.price)}`;
+    nameSpan.textContent = ${item.name} - ${formatCurrency(item.price)};
     li.appendChild(nameSpan);
 
     // Button decrement
     const decBtn = document.createElement('button');
     decBtn.textContent = "-";
-    decBtn.setAttribute('aria-label', `Kurangi jumlah ${item.name}`);
+    decBtn.setAttribute('aria-label', Kurangi jumlah ${item.name});
     decBtn.addEventListener('click', () => {
       if (item.quantity > 1) {
         item.quantity--;
@@ -87,14 +87,14 @@ function updateCartUI() {
     // Quantity text
     const qtySpan = document.createElement('span');
     qtySpan.textContent = item.quantity;
-    qtySpan.setAttribute('aria-label', `Jumlah ${item.name}`);
+    qtySpan.setAttribute('aria-label', Jumlah ${item.name});
     qtySpan.style.margin = "0 8px";
     li.appendChild(qtySpan);
 
     // Button increment
     const incBtn = document.createElement('button');
     incBtn.textContent = "+";
-    incBtn.setAttribute('aria-label', `Tambah jumlah ${item.name}`);
+    incBtn.setAttribute('aria-label', Tambah jumlah ${item.name});
     incBtn.addEventListener('click', () => {
       item.quantity++;
       updateCartCount();
@@ -105,7 +105,7 @@ function updateCartUI() {
     // Button remove
     const remBtn = document.createElement('button');
     remBtn.textContent = "✕";
-    remBtn.setAttribute('aria-label', `Hapus ${item.name} dari keranjang`);
+    remBtn.setAttribute('aria-label', Hapus ${item.name} dari keranjang);
     remBtn.addEventListener('click', () => {
       cartItems.splice(index, 1);
       updateCartCount();
@@ -116,7 +116,7 @@ function updateCartUI() {
     cartList.appendChild(li);
   });
 
-  cartTotal.textContent = `Total: ${formatCurrency(totalPrice)}`;
+  cartTotal.textContent = Total: ${formatCurrency(totalPrice)};
 }
 
 function addToCart(item) {
