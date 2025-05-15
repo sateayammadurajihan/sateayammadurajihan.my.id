@@ -130,12 +130,16 @@ function addToCart(item) {
 }
 
 function animateAboutSection() {
-  const aboutContent = document.querySelector('#aboutSection .about-content');
-  if (aboutContent) {
-    aboutContent.classList.remove('about-content'); 
-    void aboutContent.offsetWidth;                   
-    aboutContent.classList.add('about-content');    
-  }
+  const aboutParagraphs = document.querySelectorAll('#aboutSection .about-paragraph');
+  aboutParagraphs.forEach((p, index) => {
+    p.style.opacity = '0';
+    p.style.transform = 'translateY(20px)';
+    p.style.transition = `opacity 0.8s ease ${index * 0.5}s, transform 0.8s ease ${index * 0.5}s`;
+    setTimeout(() => {
+      p.style.opacity = '1';
+      p.style.transform = 'translateY(0)';
+    }, 50);
+  });
 }
 
 
