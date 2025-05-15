@@ -129,6 +129,19 @@ function addToCart(item) {
   updateCartUI();
 }
 
+function animateAboutSection() {
+  const aboutSection = document.querySelector('#aboutSection .about-content');
+  if (aboutSection) {
+    aboutSection.style.opacity = '0';
+    setTimeout(() => {
+      aboutSection.classList.remove('about-content');
+      void aboutSection.offsetWidth;
+      aboutSection.classList.add('about-content');
+    }, 100);
+  }
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
   const menuList = document.getElementById('menuGrid');
 
@@ -173,17 +186,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Navigasi pindah section dan active link
   document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute('data-target');
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const targetId = link.getAttribute('data-target');
 
-      document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
 
-      document.getElementById(targetId).classList.add('active');
-      link.classList.add('active');
-    });
+    document.getElementById(targetId).classList.add('active');
+    link.classList.add('active');
+
+    if (targetId === 'aboutSection') {
+      animateAboutSection();
+    }
   });
+});
+
 
   // Tombol kosongkan keranjang
   const clearCartBtn = document.getElementById('clearCartBtn');
