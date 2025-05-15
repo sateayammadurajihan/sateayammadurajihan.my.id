@@ -1,13 +1,14 @@
 /* Reset */
 * {
   box-sizing: border-box;
-  margin: 0; padding: 0;
+  margin: 0;
+  padding: 0;
 }
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #f7d59c, #e07b39);
   color: #3b1e02;
-  max-width: 960px;
   margin: 0 auto;
   padding-top: 55px;
   min-height: 100vh;
@@ -18,13 +19,14 @@ body {
 /* Navbar */
 nav {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
-  max-width: 960px;
   background: #b25e0d;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
   z-index: 1000;
 }
+
 .nav-list {
   display: flex;
   justify-content: center;
@@ -32,18 +34,29 @@ nav {
   font-weight: 700;
   height: 50px;
 }
+
 .nav-list li a {
   color: white;
   text-decoration: none;
   padding: 10px 20px;
   border-radius: 6px;
   transition: background-color 0.3s ease;
+  font-size: 1rem;
 }
+
 .nav-list li a.active,
 .nav-list li a:hover,
 .nav-list li a:focus {
   background-color: rgba(255, 255, 255, 0.3);
   outline: none;
+}
+
+/* Responsive Navbar Font */
+@media (max-width: 600px) {
+  .nav-list li a {
+    font-size: 0.85rem;
+    padding: 8px 14px;
+  }
 }
 
 /* Main Sections */
@@ -56,6 +69,7 @@ main {
 .page-section {
   display: none;
 }
+
 .page-section.active {
   display: block;
 }
@@ -67,22 +81,35 @@ main {
   color: #3b1e02;
   margin-bottom: 20px;
 }
+
 .home-header img {
   width: 100%;
+  height: auto;
   border-radius: 12px;
+  object-fit: cover;
   filter: brightness(0.9);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.2s;
 }
+
 .home-header-text {
   position: absolute;
-  top: 45%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.5s;
 }
+
 .home-header-text h1 {
   font-size: 2.5rem;
   font-weight: 900;
   text-shadow: 2px 2px 5px #7f4600;
 }
+
 .home-header-text p {
   font-style: italic;
   font-weight: 600;
@@ -90,25 +117,62 @@ main {
 }
 
 /* About */
-#aboutSection {
+#aboutSection .about-content {
+  opacity: 0;
+  animation: fadeSlideUp 1.2s ease forwards;
+  animation-delay: 0.3s;
+  line-height: 1.8;
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
   font-size: 1.1rem;
-  line-height: 1.5;
-  max-width: 700px;
-  margin: 0 auto 30px;
+  color: #3b1e02;
+}
+
+.about-paragraph {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.about-paragraph.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.map-link {
+  display: block;
+  margin: 30px auto 0;
+  text-align: center;
+}
+
+.map-image {
+  width: 100%;
+  max-width: 400px;
+  border: 4px solid #b25e0d;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.map-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Menu Grid */
 .menu-grid {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
   padding-left: 0;
 }
+
 .menu-item {
   background: #fce8c4;
   border-radius: 12px;
-  box-shadow: 2px 5px 10px rgba(0,0,0,0.15);
+  box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.15);
   padding: 15px;
   font-weight: 700;
   text-align: center;
@@ -118,23 +182,27 @@ main {
   flex-direction: column;
   transition: transform 0.3s ease;
 }
+
 .menu-item:hover,
 .menu-item:focus {
   transform: scale(1.05);
   outline: none;
 }
+
 .menu-image {
   width: 100%;
   height: 140px;
   object-fit: cover;
   border-radius: 10px;
   margin-bottom: 12px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
+
 .menu-item:hover .menu-image {
   transform: scale(1.05);
 }
+
 .description {
   min-height: 3em;
   margin-bottom: 8px;
@@ -144,12 +212,14 @@ main {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+
 .price {
   font-weight: bold;
   color: #7c3b00;
   font-size: 1rem;
   margin-bottom: 8px;
 }
+
 .note {
   font-style: italic;
   font-size: 0.85rem;
@@ -164,6 +234,7 @@ main {
   margin-bottom: 16px;
   padding-left: 0;
 }
+
 .checkout-list li {
   margin-bottom: 8px;
   padding: 10px 12px;
@@ -174,6 +245,7 @@ main {
   justify-content: space-between;
   align-items: center;
 }
+
 .checkout-list button {
   background: transparent;
   border: none;
@@ -183,6 +255,7 @@ main {
   cursor: pointer;
   transition: color 0.3s ease;
 }
+
 .checkout-list button:hover,
 .checkout-list button:focus {
   color: #a36e10;
@@ -201,6 +274,7 @@ button {
   transition: background-color 0.3s ease;
   margin-top: 10px;
 }
+
 button:hover,
 button:focus {
   background-color: #b77f14;
@@ -217,65 +291,25 @@ footer {
   user-select: none;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .home-header-text h1 {
-    font-size: 1.8rem;
-  }
-  .menu-grid {
-    grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
-  }
-}
-
-/* About Animasi */
+/* Animations */
 @keyframes fadeSlideUp {
-  0% { opacity: 0; transform: translateY(30px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-#aboutSection .about-content {
-  opacity: 0;
-  animation: fadeSlideUp 1.2s ease forwards;
-  animation-delay: 0.3s;
-  line-height: 1.8;
-  max-width: 800px;
-  margin: 50px auto;
-  padding: 20px;
-  font-size: 1.1rem;
-  color: #3b1e02;
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
-/* Animasi setiap paragraf di About muncul satu persatu */
-.about-paragraph {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-/* Saat aktif */
-.about-paragraph.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Style gambar maps */
-.map-link {
-  display: block;
-  margin: 30px auto 0;
-  text-align: center;
-}
-
-.map-image {
-  width: 100%;
-  max-width: 400px;
-  border: 4px solid #b25e0d;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.map-image:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-}
-
