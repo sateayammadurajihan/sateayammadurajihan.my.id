@@ -130,14 +130,11 @@ function addToCart(item) {
 }
 
 function animateAboutSection() {
-  const aboutSection = document.querySelector('#aboutSection .about-content');
-  if (aboutSection) {
-    aboutSection.style.opacity = '0';
-    setTimeout(() => {
-      aboutSection.classList.remove('about-content');
-      void aboutSection.offsetWidth;
-      aboutSection.classList.add('about-content');
-    }, 100);
+  const aboutContent = document.querySelector('#aboutSection .about-content');
+  if (aboutContent) {
+    aboutContent.classList.remove('about-content'); 
+    void aboutContent.offsetWidth;                   
+    aboutContent.classList.add('about-content');    
   }
 }
 
