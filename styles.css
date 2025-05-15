@@ -51,7 +51,6 @@ nav {
   outline: none;
 }
 
-/* Responsive Navbar Font */
 @media (max-width: 600px) {
   .nav-list li a {
     font-size: 0.85rem;
@@ -65,7 +64,6 @@ main {
   padding: 15px 20px;
 }
 
-/* Show/Hide */
 .page-section {
   display: none;
 }
@@ -87,9 +85,7 @@ main {
   height: auto;
   border-radius: 12px;
   object-fit: cover;
-  filter: brightness(0.9);
   opacity: 0;
-  transform: translateY(30px);
   animation: fadeInUp 1s ease forwards;
   animation-delay: 0.2s;
 }
@@ -160,7 +156,7 @@ main {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Menu Grid */
+/* Menu */
 .menu-grid {
   list-style: none;
   display: grid;
@@ -181,13 +177,19 @@ main {
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease forwards;
 }
 
-.menu-item:hover,
-.menu-item:focus {
-  transform: scale(1.05);
-  outline: none;
-}
+.menu-item:nth-child(1) { animation-delay: 0.2s; }
+.menu-item:nth-child(2) { animation-delay: 0.4s; }
+.menu-item:nth-child(3) { animation-delay: 0.6s; }
+.menu-item:nth-child(4) { animation-delay: 0.8s; }
+.menu-item:nth-child(5) { animation-delay: 1s; }
+.menu-item:nth-child(6) { animation-delay: 1.2s; }
+.menu-item:nth-child(7) { animation-delay: 1.4s; }
+.menu-item:nth-child(8) { animation-delay: 1.6s; }
 
 .menu-image {
   width: 100%;
@@ -293,23 +295,11 @@ footer {
 
 /* Animations */
 @keyframes fadeSlideUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
