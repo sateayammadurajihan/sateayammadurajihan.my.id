@@ -179,19 +179,27 @@ document.addEventListener('DOMContentLoaded', () => {
     menuList.appendChild(li);
   });
 
-  document.querySelectorAll('.nav-link').forEach(link => {
+  // Navigasi untuk semua link
+  document.querySelectorAll('.nav-link, .cta-button').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      const targetId = link.getAttribute('data-target');
+      const targetId = link.getAttribute('data-target') || link.getAttribute('href').substring(1);
 
-      document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      if (targetId) {
+        document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
 
-      document.getElementById(targetId).classList.add('active');
-      link.classList.add('active');
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+          targetSection.classList.add('active');
+          link.classList.add('active');
 
-      if (targetId === 'aboutSection') {
-        animateAboutSection();
+          if (targetId === 'aboutSection') {
+            animateAboutSection();
+          }
+          // Scroll ke section target
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
       }
     });
   });
