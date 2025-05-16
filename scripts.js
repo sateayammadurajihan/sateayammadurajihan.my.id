@@ -137,6 +137,84 @@ function animateAboutSection() {
   });
 }
 
+function fetchTestimonials() {
+  fetch('http://localhost:8080/api/testimonials')
+    .then(response => response.json())
+    .then(data => {
+      const testimonialsList = document.getElementById('testimonialsList');
+      testimonialsList.innerHTML = '';
+
+      data.forEach(testimonial => {
+        const div = document.createElement('div');
+        div.className = 'testimonial-item';
+
+        const name = document.createElement('p');
+        name.className = 'testimonial-name';
+        name.textContent = testimonial.name;
+        div.appendChild(name);
+
+        const message = document.createElement('p');
+        message.className = 'testimonial-message';
+        message.textContent = testimonial.message;
+        div.appendChild(message);
+
+        const rating = document.createElement('p');
+        rating.className = 'testimonial-rating';
+        for (let i = 0; i < 5; i++) {
+          const star = document.createElement('i');
+          star.className = i < testimonial.rating ? 'fas fa-star' : 'far fa-star';
+          rating.appendChild(star);
+        }
+        div.appendChild(rating);
+
+        testimonialsList.appendChild(div);
+      });
+    })
+    .catch(error => {
+      console.error('Gagal mengambil testimoni:', error);
+      const testimonialsList = document.getElementById('testimonialsList');
+      testimonialsList.innerHTML = '<p>Gagal memuat testimoni. Silakan coba lagi nanti.</p>';
+    });
+}
+
+function submitTestimonial() {
+  const form = document.getElementById('testimonialForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const message = document.getElementById('message').value;
+    const rating = parseInt(document.getElementById('rating').value);
+
+    const testimonialData = {
+      name: name,
+      message: message,
+      rating: rating
+    };
+
+    fetch('http://localhost:8080/api/testimonials', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(testimonialData)
+    })
+    .then(response => {
+      if (response.ok) {
+        alert('Testimoni berhasil dikirim!');
+        form.reset();
+        fetchTestimonials(); // Refresh daftar testimoni
+      } else {
+        throw new Error('Gagal menyimpan testimoni');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Gagal menyimpan testimoni. Silakan coba lagi.');
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const menuList = document.getElementById('menuGrid');
 
@@ -196,8 +274,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
           if (targetId === 'aboutSection') {
             animateAboutSection();
+          } else if (targetId === 'testimonialsSection') {
+            fetchTestimonials();
+            submitTestimonial();
           }
-          // Scroll ke section target
           targetSection.scrollIntoView({ behavior: 'smooth' });
         }
       }

@@ -6,7 +6,7 @@
 }
 body {
   font-family: 'Poppins', sans-serif;
-  background: #F5E8C7;
+  background: #D9C2A7;
   color: #4A4A4A;
   min-height: 100vh;
   display: flex;
@@ -15,14 +15,14 @@ body {
   overflow-x: hidden;
 }
 
-/* Navbar */
+/* Navbar Utama */
 nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background: #5C4033;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background: #3C2F2F;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
   z-index: 1000;
   padding: 10px 20px;
   display: flex;
@@ -39,7 +39,7 @@ nav {
   gap: 20px;
 }
 .nav-link {
-  color: #F5E8C7;
+  color: #D9C2A7;
   text-decoration: none;
   font-weight: 600;
   padding: 8px 16px;
@@ -50,7 +50,7 @@ nav {
 }
 .nav-link:hover,
 .nav-link.active {
-  background: rgba(245, 232, 199, 0.2);
+  background: rgba(217, 194, 167, 0.2);
   transform: scale(1.05);
 }
 .nav-link i {
@@ -59,6 +59,35 @@ nav {
 #cartCountNav {
   font-size: 0.8rem;
   margin-left: 5px;
+}
+
+/* Testimonials Navbar */
+.testimonials-nav {
+  background: #3C2F2F;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+.testimonials-brand {
+  color: #D9C2A7;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.testimonials-nav-link {
+  color: #D9C2A7;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.testimonials-nav-link:hover {
+  background: rgba(217, 194, 167, 0.2);
+  transform: scale(1.05);
 }
 
 /* Home Section */
@@ -82,14 +111,14 @@ nav {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(92, 64, 51, 0.6));
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(60, 47, 47, 0.8));
 }
 .home-header-text {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #F5E8C7;
+  color: #D9C2A7;
   text-align: center;
   padding: 20px;
   animation: fadeInUp 1s ease forwards;
@@ -107,8 +136,8 @@ nav {
 }
 .cta-button {
   display: inline-block;
-  background: #800000;
-  color: #F5E8C7;
+  background: #4A1D1D;
+  color: #D9C2A7;
   padding: 12px 24px;
   border-radius: 25px;
   text-decoration: none;
@@ -117,7 +146,7 @@ nav {
   transition: background 0.3s ease, transform 0.2s ease;
 }
 .cta-button:hover {
-  background: #660000;
+  background: #3A1515;
   transform: scale(1.05);
 }
 
@@ -137,11 +166,11 @@ nav {
 }
 .about-content h2 {
   font-size: 2rem;
-  color: #5C4033;
+  color: #3C2F2F;
   margin-bottom: 20px;
 }
 .about-paragraph i {
-  color: #5C4033;
+  color: #3C2F2F;
   margin-right: 8px;
 }
 .about-gallery {
@@ -153,7 +182,7 @@ nav {
 .about-gallery-item {
   overflow: hidden;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 .about-gallery-item img {
   width: 100%;
@@ -169,7 +198,7 @@ nav {
   flex-direction: column;
   align-items: center;
   text-decoration: none;
-  color: #800000;
+  color: #4A1D1D;
   font-weight: 600;
 }
 .map-image {
@@ -177,7 +206,7 @@ nav {
   max-width: 400px;
   border-radius: 10px;
   margin-top: 10px;
-  border: 3px solid #5C4033;
+  border: 3px solid #3C2F2F;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .map-link:hover .map-image {
@@ -186,6 +215,81 @@ nav {
 }
 .map-link span {
   margin-top: 10px;
+}
+
+/* Testimonials Section */
+.testimonials-form {
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+  padding: 20px;
+  background: #D9C2A7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.testimonials-form h3 {
+  text-align: center;
+  color: #3C2F2F;
+  margin-bottom: 20px;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group label {
+  display: block;
+  color: #4A4A4A;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #3C2F2F;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  color: #4A4A4A;
+  background: #FFF;
+}
+.form-group textarea {
+  height: 100px;
+  resize: vertical;
+}
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+.testimonial-item {
+  background: #D9C2A7;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+.testimonial-item:hover {
+  transform: translateY(-5px);
+}
+.testimonial-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #3C2F2F;
+  margin-bottom: 10px;
+}
+.testimonial-message {
+  font-size: 1rem;
+  color: #4A4A4A;
+  margin-bottom: 10px;
+}
+.testimonial-rating {
+  font-size: 1.2rem;
+  color: #4A1D1D;
+}
+.testimonial-rating i {
+  margin: 0 2px;
+  color: #4A1D1D;
 }
 
 /* Menu Section */
@@ -199,7 +303,7 @@ nav {
 .page-section h2 {
   text-align: center;
   font-size: 2rem;
-  color: #5C4033;
+  color: #3C2F2F;
   margin-bottom: 20px;
 }
 .menu-grid {
@@ -210,9 +314,9 @@ nav {
   list-style: none;
 }
 .menu-item {
-  background: #F5E8C7;
+  background: #D9C2A7;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
   padding: 15px;
   text-align: center;
   transition: transform 0.3s ease;
@@ -241,7 +345,7 @@ nav {
   min-height: 2.5em;
 }
 .price {
-  color: #800000;
+  color: #4A1D1D;
   font-weight: bold;
   font-size: 1rem;
   margin-bottom: 10px;
@@ -253,8 +357,8 @@ nav {
   margin-bottom: 10px;
 }
 .btn-add-cart {
-  background: #800000;
-  color: #F5E8C7;
+  background: #4A1D1D;
+  color: #D9C2A7;
   border: none;
   padding: 8px 16px;
   border-radius: 20px;
@@ -264,7 +368,7 @@ nav {
   transition: background 0.3s ease;
 }
 .btn-add-cart:hover {
-  background: #660000;
+  background: #3A1515;
 }
 
 /* Checkout Section */
@@ -278,18 +382,18 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background: #F5E8C7;
+  background: #D9C2A7;
   border-radius: 10px;
   margin-bottom: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 .checkout-list li span:first-child {
   flex: 1;
   font-weight: 600;
 }
 .checkout-list button {
-  background: #800000;
-  color: #F5E8C7;
+  background: #4A1D1D;
+  color: #D9C2A7;
   border: none;
   padding: 5px 10px;
   border-radius: 50%;
@@ -298,15 +402,15 @@ nav {
   font-size: 1rem;
 }
 .checkout-list button:hover {
-  background: #660000;
+  background: #3A1515;
 }
 .checkout-list button:last-child {
-  background: #5C4033;
+  background: #3C2F2F;
   border-radius: 20px;
   padding: 5px 12px;
 }
 .checkout-list button:last-child:hover {
-  background: #4A3025;
+  background: #2D2424;
 }
 .checkout-total {
   font-size: 1.2rem;
@@ -320,8 +424,8 @@ nav {
   justify-content: center;
 }
 .btn {
-  background: #800000;
-  color: #F5E8C7;
+  background: #4A1D1D;
+  color: #D9C2A7;
   border: none;
   padding: 10px 20px;
   border-radius: 25px;
@@ -330,19 +434,19 @@ nav {
   transition: background 0.3s ease;
 }
 .btn:hover {
-  background: #660000;
+  background: #3A1515;
 }
 .btn-secondary {
-  background: #5C4033;
+  background: #3C2F2F;
 }
 .btn-secondary:hover {
-  background: #4A3025;
+  background: #2D2424;
 }
 
 /* Footer */
 footer {
-  background: #5C4033;
-  color: #F5E8C7;
+  background: #3C2F2F;
+  color: #D9C2A7;
   padding: 20px;
   text-align: center;
   margin-top: auto;
@@ -355,13 +459,13 @@ footer {
   margin-top: 10px;
 }
 .social-icons a {
-  color: #F5E8C7;
+  color: #D9C2A7;
   margin: 0 10px;
   font-size: 1.2rem;
   transition: color 0.3s ease;
 }
 .social-icons a:hover {
-  color: #F5E8C7;
+  color: #D9C2A7;
 }
 
 /* Animations */
@@ -389,6 +493,9 @@ footer {
     grid-template-columns: 1fr;
   }
   .about-gallery {
+    grid-template-columns: 1fr;
+  }
+  .testimonials-grid {
     grid-template-columns: 1fr;
   }
 }

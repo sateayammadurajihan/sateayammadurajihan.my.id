@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sate Ayam Madura Jihan</title>
-  <link rel="icon" href="image/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script type="module" src="https://cdn.jsdelivr.net/gh/domyid/tracker@main/index.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <nav>
@@ -15,6 +15,7 @@
     <ul class="nav-list">
       <li><a href="#" class="nav-link active" data-target="homeSection">Home</a></li>
       <li><a href="#" class="nav-link" data-target="aboutSection">About</a></li>
+      <li><a href="#" class="nav-link" data-target="testimonialsSection">Testimonials</a></li>
       <li><a href="#" class="nav-link" data-target="menuSection">Menu</a></li>
       <li><a href="#" class="nav-link" data-target="checkoutSection"><i class="fas fa-shopping-cart"></i> <span id="cartCountNav">(0)</span></a></li>
     </ul>
@@ -65,6 +66,42 @@
           <span>Lihat Lokasi Kami</span>
         </a>
       </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonialsSection" class="page-section">
+      <!-- Navbar Khusus Testimoni -->
+      <nav class="testimonials-nav">
+        <span class="testimonials-brand">Testimoni Pelanggan</span>
+        <a href="#" class="testimonials-nav-link" onclick="document.getElementById('testimonialForm').scrollIntoView({ behavior: 'smooth' }); return false;">Beri Testimoni</a>
+      </nav>
+
+      <h2>Apa Kata Pelanggan Kami</h2>
+      <div class="testimonials-form">
+        <h3>Beri Kami Testimoni Anda</h3>
+        <form id="testimonialForm">
+          <div class="form-group">
+            <label for="name">Nama:</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Pesan:</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="rating">Rating:</label>
+            <select id="rating" name="rating" required>
+              <option value="1">★</option>
+              <option value="2">★★</option>
+              <option value="3">★★★</option>
+              <option value="4">★★★★</option>
+              <option value="5">★★★★★</option>
+            </select>
+          </div>
+          <button type="submit" class="btn">Kirim Testimoni</button>
+        </form>
+      </div>
+      <div id="testimonialsList" class="testimonials-grid"></div>
     </section>
 
     <!-- Menu -->
