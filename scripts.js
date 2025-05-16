@@ -62,13 +62,12 @@ function updateCartUI() {
     totalPrice += item.price * item.quantity;
 
     const li = document.createElement('li');
+    li.className = 'checkout-item';
 
-    // Nama produk + harga total per item
     const nameSpan = document.createElement('span');
     nameSpan.textContent = `${item.name} - ${formatCurrency(item.price * item.quantity)}`;
     li.appendChild(nameSpan);
 
-    // Button decrement (-)
     const decBtn = document.createElement('button');
     decBtn.textContent = "-";
     decBtn.setAttribute('aria-label', `Kurangi jumlah ${item.name}`);
@@ -83,14 +82,11 @@ function updateCartUI() {
     });
     li.appendChild(decBtn);
 
-    // Teks jumlah
     const qtySpan = document.createElement('span');
     qtySpan.textContent = item.quantity;
     qtySpan.setAttribute('aria-label', `Jumlah ${item.name}`);
-    qtySpan.style.margin = "0 8px";
     li.appendChild(qtySpan);
 
-    // Button increment (+)
     const incBtn = document.createElement('button');
     incBtn.textContent = "+";
     incBtn.setAttribute('aria-label', `Tambah jumlah ${item.name}`);
@@ -101,7 +97,6 @@ function updateCartUI() {
     });
     li.appendChild(incBtn);
 
-    // Button remove (✕)
     const remBtn = document.createElement('button');
     remBtn.textContent = "✕";
     remBtn.setAttribute('aria-label', `Hapus ${item.name} dari keranjang`);
@@ -134,14 +129,13 @@ function animateAboutSection() {
   aboutParagraphs.forEach((p, index) => {
     p.style.opacity = '0';
     p.style.transform = 'translateY(20px)';
-    p.style.transition = `opacity 0.8s ease ${index * 0.5}s, transform 0.8s ease ${index * 0.5}s`;
+    p.style.transition = `opacity 0.8s ease ${index * 0.2}s, transform 0.8s ease ${index * 0.2}s`;
     setTimeout(() => {
       p.style.opacity = '1';
       p.style.transform = 'translateY(0)';
     }, 50);
   });
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
   const menuList = document.getElementById('menuGrid');
@@ -185,26 +179,23 @@ document.addEventListener('DOMContentLoaded', () => {
     menuList.appendChild(li);
   });
 
-  // Navigasi pindah section dan active link
   document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    const targetId = link.getAttribute('data-target');
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('data-target');
 
-    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
 
-    document.getElementById(targetId).classList.add('active');
-    link.classList.add('active');
+      document.getElementById(targetId).classList.add('active');
+      link.classList.add('active');
 
-    if (targetId === 'aboutSection') {
-      animateAboutSection();
-    }
+      if (targetId === 'aboutSection') {
+        animateAboutSection();
+      }
+    });
   });
-});
 
-
-  // Tombol kosongkan keranjang
   const clearCartBtn = document.getElementById('clearCartBtn');
   if(clearCartBtn) {
     clearCartBtn.addEventListener('click', () => {
@@ -214,7 +205,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Tombol checkout WA
   const checkoutBtn = document.getElementById('checkoutBtn');
   if(checkoutBtn) {
     checkoutBtn.addEventListener('click', () => {
