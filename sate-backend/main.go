@@ -7,8 +7,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gorilla/mux"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/mux"
 )
 
 type Testimonial struct {
@@ -20,33 +20,33 @@ type Testimonial struct {
 }
 
 func main() {
-	// Koneksi ke MySQL (sesuai localhost kamu)
-	db, err := sql.Open("mysql", "root:your_password@tcp(127.0.0.1:3306)/sate_ayam_madura")
+	// Koneksi ke MySQL
+	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/sate_ayam_madura")
 	if err != nil {
 		log.Fatal("Gagal koneksi ke database:", err)
 	}
 	defer db.Close()
 
 	// Test koneksi
-	err = db.Ping()
-	if err != nil {
+	if err := db.Ping(); err != nil {
 		log.Fatal("Database tidak bisa dijangkau:", err)
 	}
 
 	// Setup router
 	r := mux.NewRouter()
-	r.HandleFunc("/api/testimonials", getTestimonials(db)).Methods("GET")
-	r.HandleFunc("/api/testimonials", addTestimonial(db)).Methods("POST")
+	r.HandleFunc("/api/testimonials", getTestimonials(db)).Methods(http.MethodGet)
+	r.HandleFunc("/api/testimonials", addTestimonial(db)).Methods(http.MethodPost, http.MethodOptions)
 
 	// Jalankan server
-	fmt.Println("Server berjalan di port 8080...")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	fmt.Println("✅ Server berjalan di http://localhost:8080")
+	if err := http.ListenAndServe(":8080", r); err != nil {
+		log.Fatal("Gagal menjalankan server:", err)
+	}
 }
 
 func getTestimonials(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Tambah CORS header
-		w.Header().Set("Access-Control-Allow-Origin", "*")
+		enableCORS(w)
 		w.Header().Set("Content-Type", "application/json")
 
 		rows, err := db.Query("SELECT id, name, message, rating, created_at FROM testimonials")
@@ -59,8 +59,7 @@ func getTestimonials(db *sql.DB) http.HandlerFunc {
 		var testimonials []Testimonial
 		for rows.Next() {
 			var t Testimonial
-			err := rows.Scan(&t.ID, &t.Name, &t.Message, &t.Rating, &t.CreatedAt)
-			if err != nil {
+			if err := rows.Scan(&t.ID, &t.Name, &t.Message, &t.Rating, &t.CreatedAt); err != nil {
 				http.Error(w, "Gagal membaca data testimoni", http.StatusInternalServerError)
 				return
 			}
@@ -73,10 +72,7 @@ func getTestimonials(db *sql.DB) http.HandlerFunc {
 
 func addTestimonial(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Tambah CORS header
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Methods", "POST")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		enableCORS(w)
 		w.Header().Set("Content-Type", "application/json")
 
 		// Handle preflight OPTIONS request
@@ -86,19 +82,16 @@ func addTestimonial(db *sql.DB) http.HandlerFunc {
 		}
 
 		var t Testimonial
-		err := json.NewDecoder(r.Body).Decode(&t)
-		if err != nil {
+		if err := json.NewDecoder(r.Body).Decode(&t); err != nil {
 			http.Error(w, "Gagal membaca data testimoni", http.StatusBadRequest)
 			return
 		}
 
-		// Validasi data
 		if t.Name == "" || t.Message == "" || t.Rating < 1 || t.Rating > 5 {
 			http.Error(w, "Data testimoni tidak valid", http.StatusBadRequest)
 			return
 		}
 
-		// Simpan ke database
 		result, err := db.Exec("INSERT INTO testimonials (name, message, rating) VALUES (?, ?, ?)",
 			t.Name, t.Message, t.Rating)
 		if err != nil {
@@ -111,4 +104,11 @@ func addTestimonial(db *sql.DB) http.HandlerFunc {
 		w.WriteHeader(http.StatusCreated)
 		json.NewEncoder(w).Encode(t)
 	}
+}
+
+// Fungsi reusable untuk CORS
+func enableCORS(w http.ResponseWriter) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
