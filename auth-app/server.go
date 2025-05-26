@@ -1,28 +1,19 @@
 package main
 
 import (
+    "log"
     "net/http"
 )
 
 func main() {
-    initDB()
+    InitDB()
 
-    // Serve file static & gambar
-    fs := http.FileServer(http.Dir("./image"))
-    http.Handle("/image/", http.StripPrefix("/image/", fs))
+    http.HandleFunc("/register", RegisterHandler)
+    http.HandleFunc("/login", LoginHandler)
 
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        http.ServeFile(w, r, "index.html")
-    })
+    http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+    http.Handle("/", http.FileServer(http.Dir("templates")))
 
-    http.HandleFunc("/login", showLogin)
-    http.HandleFunc("/register", showRegister)
-    http.HandleFunc("/login/post", loginHandler)
-    http.HandleFunc("/register/post", registerHandler)
-
-    http.HandleFunc("/cart", requireLogin(func(w http.ResponseWriter, r *http.Request) {
-        http.ServeFile(w, r, "cart.html")
-    }))
-
-    http.ListenAndServe(":8080", nil)
+    log.Println("Server running at http://localhost:8080")
+    log.Fatal(http.ListenAndServe(":8080", nil))
 }

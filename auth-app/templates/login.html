@@ -1,27 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        body { font-family: sans-serif; margin: 50px; }
-        form { max-width: 300px; margin: auto; }
-        label { display: block; margin: 10px 0 5px; }
-        input { width: 100%; padding: 8px; margin-bottom: 15px; }
-        button { width: 100%; padding: 10px; background: #5a189a; color: white; border: none; cursor: pointer; }
-        i { margin-right: 5px; }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Login</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
 </head>
 <body>
-    <h2>Login</h2>
-    <form action="/login/post" method="POST">
-        <label><i class="fa fa-user"></i> Username</label>
-        <input type="text" name="username" required>
-
-        <label><i class="fa fa-lock"></i> Password</label>
-        <input type="password" name="password" required>
-
-        <button type="submit"><i class="fa fa-sign-in-alt"></i> Login</button>
-    </form>
+  <h2>Login</h2>
+  <form method="POST" action="/login">
+    <label>Username atau Email:</label><br />
+    <input type="text" name="identifier" required /><br />
+    <label>Password:</label><br />
+    <input type="password" name="password" required /><br /><br />
+    <button type="submit">Login</button>
+  </form>
+  <p>Belum punya akun? <a href="/register">Register di sini</a></p>
+  <script src="/static/js/auth.js"></script>
 </body>
 </html>

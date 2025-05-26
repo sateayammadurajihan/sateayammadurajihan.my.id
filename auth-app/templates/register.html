@@ -1,30 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Register</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        body { font-family: sans-serif; margin: 50px; }
-        form { max-width: 300px; margin: auto; }
-        label { display: block; margin: 10px 0 5px; }
-        input { width: 100%; padding: 8px; margin-bottom: 15px; }
-        button { width: 100%; padding: 10px; background: #1e6091; color: white; border: none; cursor: pointer; }
-        i { margin-right: 5px; }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Register</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
 </head>
 <body>
-    <h2>Register</h2>
-    <form action="/register/post" method="POST">
-        <label><i class="fa fa-id-card"></i> Name</label>
-        <input type="text" name="name" required>
+  <h2>Register</h2>
+  <form method="POST" action="/register">
+    <label>Nama:</label><br />
+    <input type="text" name="nama" required /><br />
+    <label>Username:</label><br />
+    <input type="text" name="username" required /><br />
+    <label>Email:</label><br />
+    <input type="email" name="email" required /><br />
+    <label>Password:</label><br />
+    <input type="password" name="password" required /><br />
+    <label>Konfirmasi Password:</label><br />
+    <input type="password" name="confirm_password" required /><br /><br />
+    <button type="submit">Register</button>
+  </form>
+  <p>Sudah punya akun? <a href="/login">Login di sini</a></p>
 
-        <label><i class="fa fa-user"></i> Username</label>
-        <input type="text" name="username" required>
-
-        <label><i class="fa fa-lock"></i> Password</label>
-        <input type="password" name="password" required>
-
-        <button type="submit"><i class="fa fa-paper-plane"></i> Register</button>
-    </form>
+  <script src="/static/js/auth.js"></script>
 </body>
 </html>

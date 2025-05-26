@@ -1,53 +1,95 @@
 package main
 
 import (
+    "fmt"
     "net/http"
-    "html/template"
+
+    "golang.org/x/crypto/bcrypt"
 )
 
-func showLogin(w http.ResponseWriter, r *http.Request) {
-    t, _ := template.ParseFiles("templates/login.html")
-    t.Execute(w, nil)
+// Hash password
+func HashPassword(password string) (string, error) {
+    bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+    return string(bytes), err
 }
 
-func showRegister(w http.ResponseWriter, r *http.Request) {
-    t, _ := template.ParseFiles("templates/register.html")
-    t.Execute(w, nil)
+// Check password hash
+func CheckPasswordHash(password, hash string) bool {
+    err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+    return err == nil
 }
 
-func loginHandler(w http.ResponseWriter, r *http.Request) {
-    if r.Method == "POST" {
+// Handler register
+func RegisterHandler(w http.ResponseWriter, r *http.Request) {
+    if r.Method == http.MethodGet {
+        http.ServeFile(w, r, "templates/register.html")
+        return
+    }
+    if r.Method == http.MethodPost {
+        nama := r.FormValue("nama")
         username := r.FormValue("username")
+        email := r.FormValue("email")
         password := r.FormValue("password")
+        confirm := r.FormValue("confirm_password")
 
-        var id int
-        err := db.QueryRow("SELECT id FROM users WHERE username=? AND password=?", username, password).Scan(&id)
-        if err != nil {
-            http.Redirect(w, r, "/login", http.StatusSeeOther)
+        if password != confirm {
+            http.Error(w, "Password tidak sama", http.StatusBadRequest)
             return
         }
 
-        http.SetCookie(w, &http.Cookie{
-            Name:  "user_id",
-            Value: username,
-            Path:  "/",
-        })
+        hashed, err := HashPassword(password)
+        if err != nil {
+            http.Error(w, "Error hashing password", http.StatusInternalServerError)
+            return
+        }
 
-        http.Redirect(w, r, "/", http.StatusSeeOther)
+        _, err = DB.Exec("INSERT INTO users (nama, username, email, password) VALUES (?, ?, ?, ?)", nama, username, email, hashed)
+        if err != nil {
+            http.Error(w, fmt.Sprintf("Error insert user: %v", err), http.StatusInternalServerError)
+            return
+        }
+
+        // Tampilkan pesan sukses dan redirect otomatis ke login
+        w.Header().Set("Content-Type", "text/html")
+        fmt.Fprintln(w, `<html><body>
+            <h2>Anda berhasil daftar!</h2>
+            <p><a href="/login">Klik di sini untuk login</a></p>
+            <script>
+                setTimeout(function(){
+                    window.location.href = "/login";
+                }, 3000); // redirect setelah 3 detik
+            </script>
+            </body></html>`)
     }
 }
 
-func registerHandler(w http.ResponseWriter, r *http.Request) {
-    if r.Method == "POST" {
-        name := r.FormValue("name")
-        username := r.FormValue("username")
+// Handler login
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+    if r.Method == http.MethodGet {
+        http.ServeFile(w, r, "templates/login.html")
+        return
+    }
+    if r.Method == http.MethodPost {
+        identifier := r.FormValue("identifier")
         password := r.FormValue("password")
 
-        _, err := db.Exec("INSERT INTO users (name, username, password) VALUES (?, ?, ?)", name, username, password)
+        var id int
+        var username string
+        var hash string
+
+        err := DB.QueryRow("SELECT id, username, password FROM users WHERE username=? OR email=?", identifier, identifier).Scan(&id, &username, &hash)
         if err != nil {
-            http.Error(w, "Gagal register", http.StatusInternalServerError)
+            http.Error(w, "User tidak ditemukan", http.StatusUnauthorized)
             return
         }
-        http.Redirect(w, r, "/login", http.StatusSeeOther)
+
+        if !CheckPasswordHash(password, hash) {
+            http.Error(w, "Password salah", http.StatusUnauthorized)
+            return
+        }
+
+        _, _ = DB.Exec("INSERT INTO logins (email, login_time) VALUES (?, NOW())", identifier)
+
+        http.Redirect(w, r, "/", http.StatusSeeOther)
     }
 }

@@ -313,6 +313,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+function toggleForms() {
+  const loginForm = document.getElementById("loginForm");
+  const registerForm = document.getElementById("registerForm");
+
+  if (loginForm.style.display === "none") {
+    loginForm.style.display = "block";
+    registerForm.style.display = "none";
+  } else {
+    loginForm.style.display = "none";
+    registerForm.style.display = "block";
+  }
+}
+
+// Proteksi akses keranjang (sementara pakai localStorage)
+document.addEventListener("DOMContentLoaded", () => {
+  const cartSection = document.getElementById("checkoutSection");
+  const userLoggedIn = document.cookie.includes("user_id="); // pakai cookie dari server
+
+  if (!userLoggedIn && cartSection) {
+    cartSection.innerHTML = "<p>Silakan login untuk mengakses keranjang belanja.</p>";
+  }
+});
+
   updateCartCount();
   updateCartUI();
 });
