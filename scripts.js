@@ -313,19 +313,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-const userLoggedIn = localStorage.getItem("userLoggedIn");
-
-document.querySelectorAll('[data-target="checkoutSection"]').forEach(link => {
-  link.addEventListener("click", function (e) {
-    if (!userLoggedIn) {
-      e.preventDefault();
-      alert("Silakan login terlebih dahulu untuk mengakses keranjang!");
-      window.location.href = "/login"; // arahkan ke halaman login
-    }
-  });
-});
-
-
   updateCartCount();
   updateCartUI();
 });
