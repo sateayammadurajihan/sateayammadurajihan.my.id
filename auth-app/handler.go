@@ -1,9 +1,11 @@
 package main
 
 import (
+    "database/sql"
     "fmt"
     "html/template"
     "net/http"
+
     "golang.org/x/crypto/bcrypt"
 )
 
@@ -18,7 +20,11 @@ func CheckPasswordHash(password, hash string) bool {
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
     if r.Method == http.MethodGet {
-        tmpl, _ := template.ParseFiles("templates/register.html")
+        tmpl, err := template.ParseFiles("templates/register.html")
+        if err != nil {
+            http.Error(w, "Gagal membuka halaman", http.StatusInternalServerError)
+            return
+        }
         tmpl.Execute(w, nil)
         return
     }
@@ -30,13 +36,13 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
     hashedPassword, err := HashPassword(password)
     if err != nil {
-        http.Error(w, "Gagal hash password", http.StatusInternalServerError)
+        http.Error(w, "Gagal mengamankan password", http.StatusInternalServerError)
         return
     }
 
     _, err = DB.Exec("INSERT INTO users (nama, username, email, password) VALUES (?, ?, ?, ?)", nama, username, email, hashedPassword)
     if err != nil {
-        http.Error(w, fmt.Sprintf("Gagal menyimpan user: %v", err), http.StatusInternalServerError)
+        http.Error(w, fmt.Sprintf("Gagal menyimpan data pengguna: %v", err), http.StatusInternalServerError)
         return
     }
 
@@ -45,7 +51,11 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
     if r.Method == http.MethodGet {
-        tmpl, _ := template.ParseFiles("templates/login.html")
+        tmpl, err := template.ParseFiles("templates/login.html")
+        if err != nil {
+            http.Error(w, "Gagal membuka halaman login", http.StatusInternalServerError)
+            return
+        }
         tmpl.Execute(w, nil)
         return
     }
@@ -57,8 +67,11 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
     var username string
 
     err := DB.QueryRow("SELECT username, password FROM users WHERE username=? OR email=?", identifier, identifier).Scan(&username, &hash)
-    if err != nil {
-        http.Error(w, "Username atau email tidak ditemukan", http.StatusUnauthorized)
+    if err == sql.ErrNoRows {
+        http.Error(w, "Akun tidak ditemukan", http.StatusUnauthorized)
+        return
+    } else if err != nil {
+        http.Error(w, "Terjadi kesalahan saat login", http.StatusInternalServerError)
         return
     }
 
@@ -88,7 +101,11 @@ func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 }
 
 func CartHandler(w http.ResponseWriter, r *http.Request) {
-    tmpl, _ := template.ParseFiles("templates/cart.html")
+    tmpl, err := template.ParseFiles("templates/cart.html")
+    if err != nil {
+        http.Error(w, "Gagal membuka halaman keranjang", http.StatusInternalServerError)
+        return
+    }
     tmpl.Execute(w, nil)
 }
 
