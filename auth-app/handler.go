@@ -2,94 +2,103 @@ package main
 
 import (
     "fmt"
+    "html/template"
     "net/http"
-
     "golang.org/x/crypto/bcrypt"
 )
 
-// Hash password
 func HashPassword(password string) (string, error) {
     bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
     return string(bytes), err
 }
 
-// Check password hash
 func CheckPasswordHash(password, hash string) bool {
-    err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-    return err == nil
+    return bcrypt.CompareHashAndPassword([]byte(hash), []byte(password)) == nil
 }
 
-// Handler register
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
     if r.Method == http.MethodGet {
-        http.ServeFile(w, r, "templates/register.html")
+        tmpl, _ := template.ParseFiles("templates/register.html")
+        tmpl.Execute(w, nil)
         return
     }
-    if r.Method == http.MethodPost {
-        nama := r.FormValue("nama")
-        username := r.FormValue("username")
-        email := r.FormValue("email")
-        password := r.FormValue("password")
-        confirm := r.FormValue("confirm_password")
 
-        if password != confirm {
-            http.Error(w, "Password tidak sama", http.StatusBadRequest)
-            return
-        }
+    nama := r.FormValue("nama")
+    username := r.FormValue("username")
+    email := r.FormValue("email")
+    password := r.FormValue("password")
 
-        hashed, err := HashPassword(password)
+    hashedPassword, err := HashPassword(password)
+    if err != nil {
+        http.Error(w, "Gagal hash password", http.StatusInternalServerError)
+        return
+    }
+
+    _, err = DB.Exec("INSERT INTO users (nama, username, email, password) VALUES (?, ?, ?, ?)", nama, username, email, hashedPassword)
+    if err != nil {
+        http.Error(w, fmt.Sprintf("Gagal menyimpan user: %v", err), http.StatusInternalServerError)
+        return
+    }
+
+    http.Redirect(w, r, "/login", http.StatusSeeOther)
+}
+
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+    if r.Method == http.MethodGet {
+        tmpl, _ := template.ParseFiles("templates/login.html")
+        tmpl.Execute(w, nil)
+        return
+    }
+
+    identifier := r.FormValue("username")
+    password := r.FormValue("password")
+
+    var hash string
+    var username string
+
+    err := DB.QueryRow("SELECT username, password FROM users WHERE username=? OR email=?", identifier, identifier).Scan(&username, &hash)
+    if err != nil {
+        http.Error(w, "Username atau email tidak ditemukan", http.StatusUnauthorized)
+        return
+    }
+
+    if !CheckPasswordHash(password, hash) {
+        http.Error(w, "Password salah", http.StatusUnauthorized)
+        return
+    }
+
+    http.SetCookie(w, &http.Cookie{
+        Name:  "session_user",
+        Value: username,
+        Path:  "/",
+    })
+
+    http.Redirect(w, r, "/cart", http.StatusSeeOther)
+}
+
+func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        _, err := r.Cookie("session_user")
         if err != nil {
-            http.Error(w, "Error hashing password", http.StatusInternalServerError)
+            http.Redirect(w, r, "/login", http.StatusSeeOther)
             return
         }
-
-        _, err = DB.Exec("INSERT INTO users (nama, username, email, password) VALUES (?, ?, ?, ?)", nama, username, email, hashed)
-        if err != nil {
-            http.Error(w, fmt.Sprintf("Error insert user: %v", err), http.StatusInternalServerError)
-            return
-        }
-
-        // Tampilkan pesan sukses dan redirect otomatis ke login
-        w.Header().Set("Content-Type", "text/html")
-        fmt.Fprintln(w, `<html><body>
-            <h2>Anda berhasil daftar!</h2>
-            <p><a href="/login">Klik di sini untuk login</a></p>
-            <script>
-                setTimeout(function(){
-                    window.location.href = "/login";
-                }, 3000); // redirect setelah 3 detik
-            </script>
-            </body></html>`)
+        next(w, r)
     }
 }
 
-// Handler login
-func LoginHandler(w http.ResponseWriter, r *http.Request) {
-    if r.Method == http.MethodGet {
-        http.ServeFile(w, r, "templates/login.html")
-        return
+func CartHandler(w http.ResponseWriter, r *http.Request) {
+    tmpl, _ := template.ParseFiles("templates/cart.html")
+    tmpl.Execute(w, nil)
+}
+
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+    cookie := &http.Cookie{
+        Name:   "session_user",
+        Value:  "",
+        MaxAge: -1,
+        Path:   "/",
     }
-    if r.Method == http.MethodPost {
-        identifier := r.FormValue("identifier")
-        password := r.FormValue("password")
-
-        var id int
-        var username string
-        var hash string
-
-        err := DB.QueryRow("SELECT id, username, password FROM users WHERE username=? OR email=?", identifier, identifier).Scan(&id, &username, &hash)
-        if err != nil {
-            http.Error(w, "User tidak ditemukan", http.StatusUnauthorized)
-            return
-        }
-
-        if !CheckPasswordHash(password, hash) {
-            http.Error(w, "Password salah", http.StatusUnauthorized)
-            return
-        }
-
-        _, _ = DB.Exec("INSERT INTO logins (email, login_time) VALUES (?, NOW())", identifier)
-
-        http.Redirect(w, r, "/", http.StatusSeeOther)
-    }
+    http.SetCookie(w, cookie)
+    http.Redirect(w, r, "/login", http.StatusSeeOther)
 }

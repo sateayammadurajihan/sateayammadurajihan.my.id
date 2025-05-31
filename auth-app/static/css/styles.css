@@ -1,68 +1,36 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f2e8dc;
+  background-color: #f8f8f8;
   margin: 0;
-  padding: 20px;
+  padding: 0;
 }
-
-h2 {
-  color: #5c2a00;
-}
-
 form {
-  background-color: #fff;
-  border-radius: 8px;
+  background: white;
+  max-width: 400px;
+  margin: 50px auto;
   padding: 20px;
-  max-width: 360px;
-  margin: 20px auto;
+  border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-
-label {
+input {
   display: block;
-  margin-top: 12px;
-  font-weight: bold;
-  color: #5c2a00;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+  margin-bottom: 15px;
+  padding: 10px;
   width: 100%;
-  padding: 8px 10px;
-  margin-top: 6px;
-  border: 1px solid #bfae9c;
-  border-radius: 4px;
   box-sizing: border-box;
 }
-
 button {
-  margin-top: 20px;
-  background-color: #7c4a00;
+  background-color: #621c0d;
   color: white;
-  padding: 10px;
   border: none;
-  border-radius: 6px;
+  padding: 10px;
   width: 100%;
-  font-size: 16px;
   cursor: pointer;
+  border-radius: 4px;
 }
-
 button:hover {
-  background-color: #a36300;
+  background-color: #4a1409;
 }
-
-p {
-  text-align: center;
-  margin-top: 16px;
-  color: #5c2a00;
-}
-
 a {
-  color: #a36300;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
+  color: #621c0d;
 }

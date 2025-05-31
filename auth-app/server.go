@@ -8,8 +8,10 @@ import (
 func main() {
     InitDB()
 
-    http.HandleFunc("/register", RegisterHandler)
     http.HandleFunc("/login", LoginHandler)
+    http.HandleFunc("/register", RegisterHandler)
+    http.HandleFunc("/cart", AuthMiddleware(CartHandler))
+    http.HandleFunc("/logout", LogoutHandler)
 
     http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
     http.Handle("/", http.FileServer(http.Dir("templates")))
