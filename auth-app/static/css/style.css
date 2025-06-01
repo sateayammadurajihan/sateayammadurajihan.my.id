@@ -590,3 +590,25 @@ footer {
 #loginSection button:hover {
   background-color: #4a1409;
 }
+
+/* Floating Login Button */
+.floating-login {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #4A1D1D;
+  color: #D9C2A7;
+  padding: 14px 16px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  text-align: center;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.floating-login:hover {
+  background: #2D0F0F;
+  transform: scale(1.1);
+}
+

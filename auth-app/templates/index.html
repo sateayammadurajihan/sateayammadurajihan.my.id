@@ -4,26 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sate Ayam Madura Jihan</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="/static/css/style.css">
   <script type="module" src="https://cdn.jsdelivr.net/gh/domyid/tracker@main/index.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <nav>
-    <img src="image/favicon.ico" alt="Logo" class="nav-logo">
+    <img src="/static/image/favicon.ico" alt="Logo" class="nav-logo">
     <ul class="nav-list">
       <li><a href="#" class="nav-link active" data-target="homeSection">Home</a></li>
       <li><a href="#" class="nav-link" data-target="aboutSection">About</a></li>
       <li><a href="#" class="nav-link" data-target="testimonialsSection">Testimonials</a></li>
       <li><a href="#" class="nav-link" data-target="menuSection">Menu</a></li>
-      <li>
-        <a href="/login">
-          <i class="fas fa-user"></i> <span>Login</span>
-        </a>
-      </li>
-
-
       <li><a href="#" class="nav-link cart-icon" data-target="checkoutSection"><i class="fas fa-shopping-cart"></i> <span id="cartCountNav">(0)</span></a></li>
 
     </ul>
@@ -33,7 +26,7 @@
     <!-- Home -->
     <section id="homeSection" class="page-section active">
       <div class="home-header">
-        <img src="image/home.jpg" alt="Sate Ayam Madura Jihan" class="home-image">
+        <img src="/static/image/home.jpg" alt="Sate Ayam Madura Jihan" class="home-image">
         <div class="home-overlay"></div>
         <div class="home-header-text">
           <h1>Sate Ayam Madura Jihan</h1>
@@ -66,11 +59,11 @@
           <i class="fas fa-clock"></i> Jam Buka: Senin-Minggu, 17:00-00:00 WIB
         </p>
         <div class="about-gallery">
-          <div class="about-gallery-item"><img src="image/warung1.jpg" alt="Suasana warung 1"></div>
-          <div class="about-gallery-item"><img src="image/warung2.jpg" alt="Suasana warung 2"></div>
+          <div class="about-gallery-item"><img src="/static/image/warung1.jpg" alt="Suasana warung 1"></div>
+          <div class="about-gallery-item"><img src="/static/image/warung2.jpg" alt="Suasana warung 2"></div>
         </div>
         <a href="https://maps.app.goo.gl/bowe1AQ4xJP2FB3N8" target="_blank" class="map-link about-paragraph">
-          <img src="image/maps-preview.jpg" alt="Lokasi Sate Ayam Madura Jihan di Google Maps" class="map-image">
+          <img src="/static/image/maps-preview.jpg" alt="Lokasi Sate Ayam Madura Jihan di Google Maps" class="map-image">
           <span>Lihat Lokasi Kami</span>
         </a>
       </div>
@@ -117,6 +110,11 @@
       <h2>Menu Spesial</h2>
       <ul id="menuGrid" class="menu-grid" aria-label="Daftar menu"></ul>
     </section>
+    
+    <!-- Tombol Login Melayang -->
+    <a href="/login" class="floating-login" title="Masuk">
+      <i class="fas fa-user"></i>
+    </a>
 
     <!-- Checkout -->
     <section id="checkoutSection" class="page-section">
