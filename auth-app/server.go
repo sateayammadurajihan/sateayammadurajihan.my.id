@@ -15,6 +15,17 @@ func main() {
     http.HandleFunc("/cart", AuthMiddleware(CartHandler))
     http.HandleFunc("/logout", LogoutHandler)
 
+    http.HandleFunc("/api/testimonials", func(w http.ResponseWriter, r *http.Request) {
+    if r.Method == http.MethodGet {
+        GetTestimonialsHandler(w, r)
+    } else if r.Method == http.MethodPost || r.Method == http.MethodOptions {
+        AddTestimonialHandler(w, r)
+    } else {
+        http.Error(w, "Metode tidak diizinkan", http.StatusMethodNotAllowed)
+    }
+})
+
+
     // Serve file statis (CSS, JS, gambar)
     http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 

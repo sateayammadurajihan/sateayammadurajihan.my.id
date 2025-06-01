@@ -1,6 +1,7 @@
 package main
 
 import (
+    "encoding/json"
     "database/sql"
     "fmt"
     "html/template"
@@ -129,3 +130,72 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
     http.SetCookie(w, cookie)
     http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
+
+type Testimonial struct {
+    ID        int    `json:"id"`
+    Name      string `json:"name"`
+    Message   string `json:"message"`
+    Rating    int    `json:"rating"`
+    CreatedAt string `json:"created_at"`
+}
+
+func GetTestimonialsHandler(w http.ResponseWriter, r *http.Request) {
+    enableCORS(w)
+    w.Header().Set("Content-Type", "application/json")
+
+    rows, err := DB.Query("SELECT id, name, message, rating, created_at FROM testimonials")
+    if err != nil {
+        http.Error(w, "Gagal mengambil testimoni", http.StatusInternalServerError)
+        return
+    }
+    defer rows.Close()
+
+    var testimonials []Testimonial
+    for rows.Next() {
+        var t Testimonial
+        if err := rows.Scan(&t.ID, &t.Name, &t.Message, &t.Rating, &t.CreatedAt); err != nil {
+            http.Error(w, "Gagal membaca data", http.StatusInternalServerError)
+            return
+        }
+        testimonials = append(testimonials, t)
+    }
+
+    json.NewEncoder(w).Encode(testimonials)
+}
+
+func AddTestimonialHandler(w http.ResponseWriter, r *http.Request) {
+    enableCORS(w)
+    w.Header().Set("Content-Type", "application/json")
+
+    if r.Method == http.MethodOptions {
+        w.WriteHeader(http.StatusOK)
+        return
+    }
+
+    var t Testimonial
+    if err := json.NewDecoder(r.Body).Decode(&t); err != nil {
+        http.Error(w, "Gagal membaca input", http.StatusBadRequest)
+        return
+    }
+
+    if t.Name == "" || t.Message == "" || t.Rating < 1 || t.Rating > 5 {
+        http.Error(w, "Data testimoni tidak valid", http.StatusBadRequest)
+        return
+    }
+
+    _, err := DB.Exec("INSERT INTO testimonials (name, message, rating) VALUES (?, ?, ?)",
+        t.Name, t.Message, t.Rating)
+    if err != nil {
+        http.Error(w, "Gagal menyimpan testimoni", http.StatusInternalServerError)
+        return
+    }
+
+    w.WriteHeader(http.StatusCreated)
+}
+
+func enableCORS(w http.ResponseWriter) {
+    w.Header().Set("Access-Control-Allow-Origin", "*")
+    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+    w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+}
+

@@ -23,13 +23,13 @@ func main() {
 	// Koneksi ke MySQL
 	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/sate_ayam_madura")
 	if err != nil {
-		log.Fatal("Gagal koneksi ke database:", err)
+		log.Fatal("❌ Gagal koneksi ke database:", err)
 	}
 	defer db.Close()
 
-	// Test koneksi
+	// Tes koneksi
 	if err := db.Ping(); err != nil {
-		log.Fatal("Database tidak bisa dijangkau:", err)
+		log.Fatal("❌ Database tidak bisa dijangkau:", err)
 	}
 
 	// Setup router
@@ -38,9 +38,9 @@ func main() {
 	r.HandleFunc("/api/testimonials", addTestimonial(db)).Methods(http.MethodPost, http.MethodOptions)
 
 	// Jalankan server
-	fmt.Println("✅ Server berjalan di http://localhost:8080")
+	fmt.Println("✅ Server testimoni berjalan di http://localhost:8081")
 	if err := http.ListenAndServe(":8081", r); err != nil {
-		log.Fatal("Gagal menjalankan server:", err)
+		log.Fatal("❌ Gagal menjalankan server:", err)
 	}
 }
 
@@ -66,7 +66,9 @@ func getTestimonials(db *sql.DB) http.HandlerFunc {
 			testimonials = append(testimonials, t)
 		}
 
-		json.NewEncoder(w).Encode(testimonials)
+		if err := json.NewEncoder(w).Encode(testimonials); err != nil {
+			http.Error(w, "Gagal mengirim respon JSON", http.StatusInternalServerError)
+		}
 	}
 }
 
@@ -83,7 +85,7 @@ func addTestimonial(db *sql.DB) http.HandlerFunc {
 
 		var t Testimonial
 		if err := json.NewDecoder(r.Body).Decode(&t); err != nil {
-			http.Error(w, "Gagal membaca data testimoni", http.StatusBadRequest)
+			http.Error(w, "Format JSON tidak valid", http.StatusBadRequest)
 			return
 		}
 
@@ -101,8 +103,11 @@ func addTestimonial(db *sql.DB) http.HandlerFunc {
 
 		id, _ := result.LastInsertId()
 		t.ID = int(id)
+
 		w.WriteHeader(http.StatusCreated)
-		json.NewEncoder(w).Encode(t)
+		if err := json.NewEncoder(w).Encode(t); err != nil {
+			http.Error(w, "Gagal mengirim respon JSON", http.StatusInternalServerError)
+		}
 	}
 }
 
