@@ -39,7 +39,7 @@ func main() {
 
 	// Jalankan server
 	fmt.Println("✅ Server berjalan di http://localhost:8080")
-	if err := http.ListenAndServe(":8080", r); err != nil {
+	if err := http.ListenAndServe(":8081", r); err != nil {
 		log.Fatal("Gagal menjalankan server:", err)
 	}
 }
