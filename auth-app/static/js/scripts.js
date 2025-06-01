@@ -322,27 +322,6 @@ Terima kasih!`;
     cartSection.innerHTML = "<p>Silakan login untuk mengakses keranjang belanja.</p>";
   }
 
-    // notifikasi jika login sukses
-  if (window.location.search.includes("login=success")) {
-    const suksesNotif = document.createElement("div");
-    suksesNotif.textContent = "✅ Anda berhasil login!";
-    suksesNotif.style.position = "fixed";
-    suksesNotif.style.top = "80px";
-    suksesNotif.style.left = "50%";
-    suksesNotif.style.transform = "translateX(-50%)";
-    suksesNotif.style.background = "#4CAF50";
-    suksesNotif.style.color = "#fff";
-    suksesNotif.style.padding = "10px 20px";
-    suksesNotif.style.borderRadius = "8px";
-    suksesNotif.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
-    suksesNotif.style.zIndex = "999";
-    document.body.appendChild(suksesNotif);
-
-    setTimeout(() => {
-      suksesNotif.remove();
-    }, 3000);
-  }
-
   updateCartCount();
   updateCartUI();
 
@@ -375,6 +354,23 @@ if (sessionUser) {
   if (logoutNav) logoutNav.style.display = "inline";
 
 }
+
+const userIcon = document.querySelector(".user-icon");
+const userMenu = document.getElementById("userMenu");
+
+if (userIcon && userMenu) {
+  userIcon.addEventListener("click", () => {
+    userMenu.classList.toggle("hidden");
+  });
+}
+
+// Isi nama user di menu popup jika login
+if (sessionUser && userMenu) {
+  const username = sessionUser.split('=')[1];
+  const nameEl = document.getElementById("userMenuName");
+  if (nameEl) nameEl.textContent = `Halo, ${username}`;
+}
+
 
 });
 
