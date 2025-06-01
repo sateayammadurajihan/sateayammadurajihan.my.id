@@ -1,3 +1,4 @@
+
 const menuData = [
   { name: "Sate Kambing", price: 18000, image: "image/sate-kambing.jpg", detail: "10 tusuk" },
   { name: "Sate Sapi", price: 18000, image: "image/sate-sapi.jpg", detail: "10 tusuk" },
@@ -38,6 +39,9 @@ const menuData = [
   { name: "Kerupuk Black", price: 2500, image: "image/kerupuk-black.jpg", detail: "2 kerupuk" }
 ];
 
+// JavaScript logic akan dilanjutkan setelah file disiapkan
+
+
 let cartItems = [];
 
 function formatCurrency(num) {
@@ -70,7 +74,6 @@ function updateCartUI() {
 
     const decBtn = document.createElement('button');
     decBtn.textContent = "-";
-    decBtn.setAttribute('aria-label', `Kurangi jumlah ${item.name}`);
     decBtn.addEventListener('click', () => {
       if (item.quantity > 1) {
         item.quantity--;
@@ -84,12 +87,10 @@ function updateCartUI() {
 
     const qtySpan = document.createElement('span');
     qtySpan.textContent = item.quantity;
-    qtySpan.setAttribute('aria-label', `Jumlah ${item.name}`);
     li.appendChild(qtySpan);
 
     const incBtn = document.createElement('button');
     incBtn.textContent = "+";
-    incBtn.setAttribute('aria-label', `Tambah jumlah ${item.name}`);
     incBtn.addEventListener('click', () => {
       item.quantity++;
       updateCartCount();
@@ -99,7 +100,6 @@ function updateCartUI() {
 
     const remBtn = document.createElement('button');
     remBtn.textContent = "✕";
-    remBtn.setAttribute('aria-label', `Hapus ${item.name} dari keranjang`);
     remBtn.addEventListener('click', () => {
       cartItems.splice(index, 1);
       updateCartCount();
@@ -143,7 +143,6 @@ function fetchTestimonials() {
     .then(data => {
       const testimonialsList = document.getElementById('testimonialsList');
       testimonialsList.innerHTML = '';
-
       data.forEach(testimonial => {
         const div = document.createElement('div');
         div.className = 'testimonial-item';
@@ -173,7 +172,7 @@ function fetchTestimonials() {
     .catch(error => {
       console.error('Gagal mengambil testimoni:', error);
       const testimonialsList = document.getElementById('testimonialsList');
-      testimonialsList.innerHTML = '<p>Gagal memuat testimoni. Silakan coba lagi nanti.</p>';
+      testimonialsList.innerHTML = '<p>Gagal memuat testimoni.</p>';
     });
 }
 
@@ -203,14 +202,14 @@ function submitTestimonial() {
       if (response.ok) {
         alert('Testimoni berhasil dikirim!');
         form.reset();
-        fetchTestimonials(); // Refresh daftar testimoni
+        fetchTestimonials();
       } else {
         throw new Error('Gagal menyimpan testimoni');
       }
     })
     .catch(error => {
       console.error('Error:', error);
-      alert('Gagal menyimpan testimoni. Silakan coba lagi.');
+      alert('Gagal menyimpan testimoni.');
     });
   });
 }
@@ -257,29 +256,29 @@ document.addEventListener('DOMContentLoaded', () => {
     menuList.appendChild(li);
   });
 
-  // Navigasi untuk semua link
   document.querySelectorAll('.nav-link, .cta-button').forEach(link => {
     link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      const targetId = link.getAttribute('data-target') || (href && href.startsWith('#') ? href.substring(1) : null);
+      if (!targetId) return;
+
       e.preventDefault();
-      const targetId = link.getAttribute('data-target') || link.getAttribute('href').substring(1);
 
-      if (targetId) {
-        document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
 
-        const targetSection = document.getElementById(targetId);
-        if (targetSection) {
-          targetSection.classList.add('active');
-          link.classList.add('active');
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        targetSection.classList.add('active');
+        link.classList.add('active');
 
-          if (targetId === 'aboutSection') {
-            animateAboutSection();
-          } else if (targetId === 'testimonialsSection') {
-            fetchTestimonials();
-            submitTestimonial();
-          }
-          targetSection.scrollIntoView({ behavior: 'smooth' });
+        if (targetId === 'aboutSection') animateAboutSection();
+        else if (targetId === 'testimonialsSection') {
+          fetchTestimonials();
+          submitTestimonial();
         }
+
+        targetSection.scrollIntoView({ behavior: 'smooth' });
       }
     });
   });
@@ -300,12 +299,15 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Keranjang belanja kosong!');
         return;
       }
-      let pesan = "Halo, saya ingin memesan:\n";
+      let pesan = "Halo, saya ingin memesan:";
       cartItems.forEach(item => {
-        pesan += `- ${item.name} x${item.quantity} = ${formatCurrency(item.price * item.quantity)}\n`;
+        pesan += `- ${item.name} x${item.quantity} = ${formatCurrency(item.price * item.quantity)}
+`;
       });
       const totalHarga = cartItems.reduce((acc, i) => acc + i.price * i.quantity, 0);
-      pesan += `Total: ${formatCurrency(totalHarga)}\n\nTerima kasih!`;
+      pesan += `Total: ${formatCurrency(totalHarga)}
+
+Terima kasih!`;
 
       const nomorWA = '6285759858593';
       const urlWA = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
@@ -313,28 +315,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-function toggleForms() {
-  const loginForm = document.getElementById("loginForm");
-  const registerForm = document.getElementById("registerForm");
-
-  if (loginForm.style.display === "none") {
-    loginForm.style.display = "block";
-    registerForm.style.display = "none";
-  } else {
-    loginForm.style.display = "none";
-    registerForm.style.display = "block";
-  }
-}
-
-// Proteksi akses keranjang (sementara pakai localStorage)
-document.addEventListener("DOMContentLoaded", () => {
+  // Proteksi akses keranjang
   const cartSection = document.getElementById("checkoutSection");
-  const userLoggedIn = document.cookie.includes("user_id="); // pakai cookie dari server
-
+  const userLoggedIn = document.cookie.includes("user_id=");
   if (!userLoggedIn && cartSection) {
     cartSection.innerHTML = "<p>Silakan login untuk mengakses keranjang belanja.</p>";
   }
-});
 
   updateCartCount();
   updateCartUI();

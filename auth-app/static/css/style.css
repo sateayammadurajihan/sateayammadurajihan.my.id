@@ -532,6 +532,35 @@ footer {
   
 }
 
+/* Keranjang Icon */
+.cart-icon {
+  display: flex;
+  align-items: center;
+  color: #D9C2A7;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: background 0.3s ease, transform 0.2s ease;
+  position: relative;
+}
+
+.cart-icon i {
+  font-size: 1.2rem;
+}
+
+.cart-count {
+  font-size: 0.8rem;
+  margin-left: 6px;
+}
+
+@media (max-width: 600px) {
+  .cart-icon {
+    display: flex !important;
+  }
+}
+
+
 #loginSection form {
   background: white;
   max-width: 400px;

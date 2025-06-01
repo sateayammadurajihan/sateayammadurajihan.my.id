@@ -1,4 +1,4 @@
-/* Reset and Base */
+/* Reset and Base
 * {
   box-sizing: border-box;
   margin: 0;
@@ -499,4 +499,4 @@ footer {
     grid-template-columns: 1fr;
   }
   
-}
+} 
