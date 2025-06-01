@@ -86,7 +86,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
         Path:  "/",
     })
 
-    http.Redirect(w, r, "/?login=success", http.StatusSeeOther)
+    http.Redirect(w, r, "/?target=checkoutSection", http.StatusSeeOther)
 }
 
 func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
