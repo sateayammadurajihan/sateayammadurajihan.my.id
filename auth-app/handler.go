@@ -50,6 +50,12 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
+    cookie, err := r.Cookie("session_user")
+    if err == nil && cookie.Value != "" {
+        http.Redirect(w, r, "/?target=checkoutSection", http.StatusSeeOther)
+    return
+    }
+
     if r.Method == http.MethodGet {
         tmpl, err := template.ParseFiles("templates/login.html")
         if err != nil {
@@ -66,7 +72,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
     var hash string
     var username string
 
-    err := DB.QueryRow("SELECT username, password FROM users WHERE username=? OR email=?", identifier, identifier).Scan(&username, &hash)
+    _, err := DB.QueryRow("SELECT username, password FROM users WHERE username=? OR email=?", identifier, identifier).Scan(&username, &hash)
     if err == sql.ErrNoRows {
         http.Error(w, "Akun tidak ditemukan", http.StatusUnauthorized)
         return

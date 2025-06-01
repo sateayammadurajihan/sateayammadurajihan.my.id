@@ -370,8 +370,11 @@ if (sessionUser) {
   // Sembunyikan tombol login
   const loginNav = document.getElementById("loginNav");
   if (loginNav) loginNav.style.display = "none";
-}
 
+  const logoutNav = document.getElementById("logoutNav");
+  if (logoutNav) logoutNav.style.display = "inline";
+
+}
 
 });
 
