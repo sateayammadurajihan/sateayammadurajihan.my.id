@@ -317,7 +317,7 @@ Terima kasih!`;
 
   // Proteksi akses keranjang
   const cartSection = document.getElementById("checkoutSection");
-  const userLoggedIn = document.cookie.includes("user_id=");
+  const userLoggedIn = document.cookie.includes("session_user=");
   if (!userLoggedIn && cartSection) {
     cartSection.innerHTML = "<p>Silakan login untuk mengakses keranjang belanja.</p>";
   }
@@ -355,6 +355,23 @@ Terima kasih!`;
       targetLink.click(); // langsung klik nav-link sesuai section target
     }
   }
+
+  // Tampilkan username di navbar jika sudah login
+const cookies = document.cookie.split(';').map(c => c.trim());
+const sessionUser = cookies.find(c => c.startsWith("session_user="));
+if (sessionUser) {
+  const username = sessionUser.split('=')[1];
+  const welcomeEl = document.getElementById("userWelcome");
+  if (welcomeEl) {
+    welcomeEl.textContent = `Halo, ${username}`;
+    welcomeEl.style.display = "inline";
+  }
+
+  // Sembunyikan tombol login
+  const loginNav = document.getElementById("loginNav");
+  if (loginNav) loginNav.style.display = "none";
+}
+
 
 });
 
