@@ -128,7 +128,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
         Path:   "/",
     }
     http.SetCookie(w, cookie)
-    http.Redirect(w, r, "/login", http.StatusSeeOther)
+    http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 type Testimonial struct {
