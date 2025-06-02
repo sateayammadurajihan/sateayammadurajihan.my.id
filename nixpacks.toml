@@ -5,7 +5,8 @@ nixPkgs = ['go']
 cmds = []
 
 [phases.build]
-cmds = ['go build -o app ./auth-app']
+cmds = ['cd auth-app && go build -o app']
 
 [phases.start]
-cmd = './app'
+cmd = './auth-app/app'
+
