@@ -6,8 +6,6 @@ import (
     "fmt"
     "html/template"
     "net/http"
-
-    "golang.org/x/crypto/bcrypt"
 )
 
 func HashPassword(password string) (string, error) {
@@ -26,7 +24,9 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
             http.Error(w, "Gagal membuka halaman", http.StatusInternalServerError)
             return
         }
-        tmpl.Execute(w, nil)
+        if err := tmpl.Execute(w, nil); err != nil {
+            http.Error(w, "Gagal render halaman", http.StatusInternalServerError)
+        }
         return
     }
 
@@ -51,25 +51,24 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-    // Cek apakah sudah login, langsung redirect
     cookie, err := r.Cookie("session_user")
     if err == nil && cookie.Value != "" {
         http.Redirect(w, r, "/?target=checkoutSection", http.StatusSeeOther)
         return
     }
 
-    // GET = tampilkan form login
     if r.Method == http.MethodGet {
         tmpl, err := template.ParseFiles("templates/login.html")
         if err != nil {
             http.Error(w, "Gagal membuka halaman login", http.StatusInternalServerError)
             return
         }
-        tmpl.Execute(w, nil)
+        if err := tmpl.Execute(w, nil); err != nil {
+            http.Error(w, "Gagal render halaman login", http.StatusInternalServerError)
+        }
         return
     }
 
-    // POST = proses login
     identifier := r.FormValue("username")
     password := r.FormValue("password")
 
@@ -90,11 +89,13 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // Set cookie session setelah login berhasil
     http.SetCookie(w, &http.Cookie{
-        Name:  "session_user",
-        Value: username,
-        Path:  "/",
+        Name:     "session_user",
+        Value:    username,
+        Path:     "/",
+        HttpOnly: true,
+        Secure:   false,
+        SameSite: http.SameSiteLaxMode,
     })
 
     http.Redirect(w, r, "/?target=checkoutSection", http.StatusSeeOther)
@@ -117,7 +118,9 @@ func CartHandler(w http.ResponseWriter, r *http.Request) {
         http.Error(w, "Gagal membuka halaman keranjang", http.StatusInternalServerError)
         return
     }
-    tmpl.Execute(w, nil)
+    if err := tmpl.Execute(w, nil); err != nil {
+        http.Error(w, "Gagal render halaman keranjang", http.StatusInternalServerError)
+    }
 }
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
@@ -198,4 +201,3 @@ func enableCORS(w http.ResponseWriter) {
     w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
     w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
-
