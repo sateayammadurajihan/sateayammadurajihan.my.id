@@ -12,12 +12,26 @@ import (
 var DB *sql.DB
 
 func InitDB() {
-    dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s",
-        os.Getenv("DB_USER"),
-        os.Getenv("DB_PASSWORD"),
-        os.Getenv("DB_HOST"),
-        os.Getenv("DB_NAME"),
-    )
+    // Ambil env vars, jika kosong gunakan default localhost (untuk development lokal)
+    dbUser := os.Getenv("DB_USER")
+    if dbUser == "" {
+        dbUser = "root"
+    }
+
+    dbPassword := os.Getenv("DB_PASSWORD") // kosongkan jika password kosong di lokal
+
+    dbHost := os.Getenv("DB_HOST")
+    if dbHost == "" {
+        dbHost = "127.0.0.1:3306"
+    }
+
+    dbName := os.Getenv("DB_NAME")
+    if dbName == "" {
+        dbName = "websitesate_user"
+    }
+
+    // Buat data source name (DSN)
+    dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s", dbUser, dbPassword, dbHost, dbName)
 
     var err error
     DB, err = sql.Open("mysql", dsn)
