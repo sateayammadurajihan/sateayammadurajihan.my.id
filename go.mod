@@ -1,6 +1,6 @@
-module auth-app
+module sateayammadurajihan.my.id
 
-go 1.23.5
+go 1.20
 
 require (
 	github.com/go-sql-driver/mysql v1.9.2
