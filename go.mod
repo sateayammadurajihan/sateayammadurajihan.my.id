@@ -1,6 +1,6 @@
 module sateayammadurajihan
 
-go 1.23.0
+go 1.20
 
 toolchain go1.23.5
 
