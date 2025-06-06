@@ -7,7 +7,7 @@ RUN go mod download
 
 COPY . .
 
-# Ubah bagian ini agar hanya build file utama
-RUN go build -o main server.go
+# Build semua file .go jadi 1 binary
+RUN go build -o main .
 
 CMD ["/app/main"]
