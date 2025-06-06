@@ -10,33 +10,26 @@ import (
 func main() {
     InitDB()
 
-    // Route auth dan halaman
+    // Route untuk form dan aksi
     http.HandleFunc("/login", LoginHandler)
     http.HandleFunc("/register", RegisterHandler)
     http.HandleFunc("/cart", AuthMiddleware(CartHandler))
     http.HandleFunc("/logout", LogoutHandler)
 
-    // API testimoni dengan dukungan CORS
     http.HandleFunc("/api/testimonials", func(w http.ResponseWriter, r *http.Request) {
-        enableCORS(w) // <--- penting agar fetch dari frontend bisa masuk
-
-        switch r.Method {
-        case http.MethodGet:
+        if r.Method == http.MethodGet {
             GetTestimonialsHandler(w, r)
-        case http.MethodPost:
+        } else if r.Method == http.MethodPost || r.Method == http.MethodOptions {
             AddTestimonialHandler(w, r)
-        case http.MethodOptions:
-            // CORS preflight request
-            w.WriteHeader(http.StatusOK)
-        default:
+        } else {
             http.Error(w, "Metode tidak diizinkan", http.StatusMethodNotAllowed)
         }
     })
 
-    // Static files (CSS, JS, images)
+    // Serve file statis (CSS, JS, gambar)
     http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
-    // Halaman utama
+    // Serve halaman utama (index.html)
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
         if r.URL.Path != "/" {
             http.NotFound(w, r)
@@ -48,16 +41,15 @@ func main() {
             http.Error(w, "Gagal membuka halaman utama", http.StatusInternalServerError)
             return
         }
-
         tmpl.Execute(w, nil)
     })
 
-    // Port
+    // Ambil port dari environment variable PORT, default 8080 untuk lokal
     port := os.Getenv("PORT")
     if port == "" {
         port = "8080"
     }
 
     log.Printf("Server running at http://localhost:%s\n", port)
-    log.Fatal(http.ListenAndServe(":"+port, nil))
+    log.Fatal(http.ListenAndServe(":" + port, nil))
 }
