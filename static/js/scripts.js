@@ -112,7 +112,7 @@ function animateAboutSection() {
 }
 
 function fetchTestimonials() {
-  fetch(`${BASE_URL}/api/testimonials`)
+  fetch('https://www.sateayammadurajihan.my.id/api/testimonials')
     .then(res => res.json())
     .then(data => {
       const list = document.getElementById('testimonialsList');
@@ -143,7 +143,7 @@ function submitTestimonial() {
     const message = document.getElementById('message').value;
     const rating = parseInt(document.getElementById('rating').value);
 
-    fetch(`${BASE_URL}/api/testimonials`, {
+    fetch('https://www.sateayammadurajihan.my.id/api/testimonials', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, message, rating })

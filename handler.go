@@ -5,9 +5,10 @@ import (
     "database/sql"
     "fmt"
     "html/template"
+    "log"
     "net/http"
 
-    "golang.org/x/crypto/bcrypt" 
+    "golang.org/x/crypto/bcrypt"
 )
 
 func HashPassword(password string) (string, error) {
@@ -150,6 +151,7 @@ func GetTestimonialsHandler(w http.ResponseWriter, r *http.Request) {
 
     rows, err := DB.Query("SELECT id, name, message, rating, created_at FROM testimonials")
     if err != nil {
+        log.Println("Error DB Query (GET):", err)
         http.Error(w, "Gagal mengambil testimoni", http.StatusInternalServerError)
         return
     }
@@ -159,6 +161,7 @@ func GetTestimonialsHandler(w http.ResponseWriter, r *http.Request) {
     for rows.Next() {
         var t Testimonial
         if err := rows.Scan(&t.ID, &t.Name, &t.Message, &t.Rating, &t.CreatedAt); err != nil {
+            log.Println("Error scanning row:", err)
             http.Error(w, "Gagal membaca data", http.StatusInternalServerError)
             return
         }
@@ -179,6 +182,7 @@ func AddTestimonialHandler(w http.ResponseWriter, r *http.Request) {
 
     var t Testimonial
     if err := json.NewDecoder(r.Body).Decode(&t); err != nil {
+        log.Println("Error decoding JSON:", err)
         http.Error(w, "Gagal membaca input", http.StatusBadRequest)
         return
     }
@@ -191,6 +195,7 @@ func AddTestimonialHandler(w http.ResponseWriter, r *http.Request) {
     _, err := DB.Exec("INSERT INTO testimonials (name, message, rating) VALUES (?, ?, ?)",
         t.Name, t.Message, t.Rating)
     if err != nil {
+        log.Println("Error DB Insert (POST):", err)
         http.Error(w, "Gagal menyimpan testimoni", http.StatusInternalServerError)
         return
     }
