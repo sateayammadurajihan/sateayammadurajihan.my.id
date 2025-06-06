@@ -1,17 +1,13 @@
-# image resmi Golang
 FROM golang:1.20
 
-# Buat direktori kerja di container
 WORKDIR /app
 
-# Salin semua file ke direktori kerja
-COPY . .
-
-# Ambil semua dependencies Go
+COPY go.mod go.sum ./
 RUN go mod download
 
-# Build aplikasi Go jadi binary bernama "main"
-RUN go build -o main .
+COPY . .
 
-# Jalankan aplikasi
+# Ubah bagian ini agar hanya build file utama
+RUN go build -o main server.go
+
 CMD ["/app/main"]
