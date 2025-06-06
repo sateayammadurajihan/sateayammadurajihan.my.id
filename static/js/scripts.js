@@ -1,4 +1,4 @@
-const BASE_URL = window.location.origin;  // auto adapt to public domain
+const BASE_URL = window.location.origin;
 
 const menuData = [
   { name: "Sate Kambing", price: 18000, image: "/static/image/sate-thaican.jpg", detail: "10 tusuk" },
@@ -112,7 +112,7 @@ function animateAboutSection() {
 }
 
 function fetchTestimonials() {
-  fetch('https://www.sateayammadurajihan.my.id/api/testimonials')
+  fetch(`${BASE_URL}/api/testimonials`)
     .then(res => res.json())
     .then(data => {
       const list = document.getElementById('testimonialsList');
@@ -143,7 +143,7 @@ function submitTestimonial() {
     const message = document.getElementById('message').value;
     const rating = parseInt(document.getElementById('rating').value);
 
-    fetch('https://www.sateayammadurajihan.my.id/api/testimonials', {
+    fetch(`${BASE_URL}/api/testimonials`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, message, rating })

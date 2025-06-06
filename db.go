@@ -3,7 +3,9 @@ package main
 import (
 	"database/sql"
 	"log"
+	"net/url"
 	"os"
+	"strings"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -11,29 +13,44 @@ import (
 var DB *sql.DB
 
 func InitDB() {
-	// Coba baca langsung dari Railway environment variable
-	dsn := os.Getenv("MYSQL_URL") // gunakan langsung dari Railway
+	// Ambil dari MYSQL_URL Railway jika tersedia
+	rawDSN := os.Getenv("MYSQL_URL")
+	if rawDSN != "" {
+		// Railway format: mysql://root:pass@host:port/dbname
+		parsed, err := url.Parse(rawDSN)
+		if err != nil {
+			log.Fatal("❌ Gagal parsing MYSQL_URL:", err)
+		}
 
-	if dsn == "" {
-		// fallback ke setting lokal (localhost tanpa password)
-		dbUser := os.Getenv("DB_USER")
-		if dbUser == "" {
-			dbUser = "root"
+		user := parsed.User.Username()
+		pass, _ := parsed.User.Password()
+		host := parsed.Host
+		dbname := strings.TrimPrefix(parsed.Path, "/")
+
+		// Format ulang ke Go MySQL Driver style
+		rawDSN = user + ":" + pass + "@tcp(" + host + ")/" + dbname
+	}
+
+	// Jika tidak tersedia, fallback ke lokal
+	if rawDSN == "" {
+		user := os.Getenv("DB_USER")
+		if user == "" {
+			user = "root"
 		}
-		dbPassword := os.Getenv("DB_PASSWORD") // bisa kosong
-		dbHost := os.Getenv("DB_HOST")
-		if dbHost == "" {
-			dbHost = "127.0.0.1:3306"
+		pass := os.Getenv("DB_PASSWORD") // bisa kosong
+		host := os.Getenv("DB_HOST")
+		if host == "" {
+			host = "127.0.0.1:3306"
 		}
-		dbName := os.Getenv("DB_NAME")
-		if dbName == "" {
-			dbName = "websitesate_user"
+		dbname := os.Getenv("DB_NAME")
+		if dbname == "" {
+			dbname = "websitesate_user"
 		}
-		dsn = dbUser + ":" + dbPassword + "@tcp(" + dbHost + ")/" + dbName
+		rawDSN = user + ":" + pass + "@tcp(" + host + ")/" + dbname
 	}
 
 	var err error
-	DB, err = sql.Open("mysql", dsn)
+	DB, err = sql.Open("mysql", rawDSN)
 	if err != nil {
 		log.Fatal("❌ Gagal membuka koneksi ke database:", err)
 	}
