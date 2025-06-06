@@ -27,9 +27,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
             http.Error(w, "Gagal membuka halaman", http.StatusInternalServerError)
             return
         }
-        if err := tmpl.Execute(w, nil); err != nil {
-            http.Error(w, "Gagal render halaman", http.StatusInternalServerError)
-        }
+        tmpl.Execute(w, nil)
         return
     }
 
@@ -66,9 +64,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
             http.Error(w, "Gagal membuka halaman login", http.StatusInternalServerError)
             return
         }
-        if err := tmpl.Execute(w, nil); err != nil {
-            http.Error(w, "Gagal render halaman login", http.StatusInternalServerError)
-        }
+        tmpl.Execute(w, nil)
         return
     }
 
@@ -121,9 +117,7 @@ func CartHandler(w http.ResponseWriter, r *http.Request) {
         http.Error(w, "Gagal membuka halaman keranjang", http.StatusInternalServerError)
         return
     }
-    if err := tmpl.Execute(w, nil); err != nil {
-        http.Error(w, "Gagal render halaman keranjang", http.StatusInternalServerError)
-    }
+    tmpl.Execute(w, nil)
 }
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
@@ -136,6 +130,8 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
     http.SetCookie(w, cookie)
     http.Redirect(w, r, "/", http.StatusSeeOther)
 }
+
+// -------------------- TESTIMONI ------------------
 
 type Testimonial struct {
     ID        int    `json:"id"`
