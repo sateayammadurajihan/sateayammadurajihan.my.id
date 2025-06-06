@@ -1,7 +1,8 @@
 module sateayammadurajihan
 
-go 1.22
+go 1.23.0
 
+toolchain go1.23.5
 
 require (
 	github.com/go-sql-driver/mysql v1.9.2
