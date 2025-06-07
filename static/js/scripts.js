@@ -1,5 +1,6 @@
-const BASE_URL = window.location.origin;
+// scripts.js (FINAL VERSION TERINTEGRASI LOGIN VIA USER ICON)
 
+// === Data Menu ===
 const menuData = [
   { name: "Sate Kambing", price: 18000, image: "/static/image/sate-thaican.jpg", detail: "10 tusuk" },
   { name: "Sate Sapi", price: 18000, image: "/static/image/sate-sapi.jpg", detail: "10 tusuk" },
@@ -48,8 +49,8 @@ function formatCurrency(num) {
 
 function updateCartCount() {
   const cartCountNav = document.getElementById('cartCountNav');
-  let totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-  if (cartCountNav) cartCountNav.textContent = `(${totalCount})`;
+  let totalCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  if(cartCountNav) cartCountNav.textContent = `(${totalCount})`;
 }
 
 function updateCartUI() {
@@ -60,50 +61,64 @@ function updateCartUI() {
 
   cartItems.forEach((item, index) => {
     totalPrice += item.price * item.quantity;
+
     const li = document.createElement('li');
     li.className = 'checkout-item';
-    li.innerHTML = `
-      <span>${item.name} - ${formatCurrency(item.price * item.quantity)}</span>
-      <button onclick="changeQty(${index}, -1)">-</button>
-      <span>${item.quantity}</span>
-      <button onclick="changeQty(${index}, 1)">+</button>
-      <button onclick="removeItem(${index})">✕</button>
-    `;
+
+    const nameSpan = document.createElement('span');
+    nameSpan.textContent = `${item.name} - ${formatCurrency(item.price * item.quantity)}`;
+    li.appendChild(nameSpan);
+
+    const decBtn = document.createElement('button');
+    decBtn.textContent = "-";
+    decBtn.addEventListener('click', () => {
+      item.quantity > 1 ? item.quantity-- : cartItems.splice(index, 1);
+      updateCartCount();
+      updateCartUI();
+    });
+    li.appendChild(decBtn);
+
+    const qtySpan = document.createElement('span');
+    qtySpan.textContent = item.quantity;
+    li.appendChild(qtySpan);
+
+    const incBtn = document.createElement('button');
+    incBtn.textContent = "+";
+    incBtn.addEventListener('click', () => {
+      item.quantity++;
+      updateCartCount();
+      updateCartUI();
+    });
+    li.appendChild(incBtn);
+
+    const remBtn = document.createElement('button');
+    remBtn.textContent = "✕";
+    remBtn.addEventListener('click', () => {
+      cartItems.splice(index, 1);
+      updateCartCount();
+      updateCartUI();
+    });
+    li.appendChild(remBtn);
+
     cartList.appendChild(li);
   });
 
-  if (cartTotal) cartTotal.textContent = `Total: ${formatCurrency(totalPrice)}`;
-}
-
-function changeQty(index, delta) {
-  cartItems[index].quantity += delta;
-  if (cartItems[index].quantity <= 0) cartItems.splice(index, 1);
-  updateCartCount();
-  updateCartUI();
-}
-
-function removeItem(index) {
-  cartItems.splice(index, 1);
-  updateCartCount();
-  updateCartUI();
+  if(cartTotal) cartTotal.textContent = `Total: ${formatCurrency(totalPrice)}`;
 }
 
 function addToCart(item) {
-  const found = cartItems.find(i => i.name === item.name);
-  if (found) {
-    found.quantity++;
-  } else {
-    cartItems.push({ ...item, quantity: 1 });
-  }
+  const index = cartItems.findIndex(i => i.name === item.name);
+  index >= 0 ? cartItems[index].quantity++ : cartItems.push({...item, quantity: 1});
   updateCartCount();
   updateCartUI();
 }
 
 function animateAboutSection() {
-  document.querySelectorAll('#aboutSection .about-paragraph').forEach((p, i) => {
+  const aboutParagraphs = document.querySelectorAll('#aboutSection .about-paragraph');
+  aboutParagraphs.forEach((p, index) => {
     p.style.opacity = '0';
     p.style.transform = 'translateY(20px)';
-    p.style.transition = `opacity 0.8s ease ${i * 0.2}s, transform 0.8s ease ${i * 0.2}s`;
+    p.style.transition = `opacity 0.8s ease ${index * 0.2}s, transform 0.8s ease ${index * 0.2}s`;
     setTimeout(() => {
       p.style.opacity = '1';
       p.style.transform = 'translateY(0)';
@@ -112,44 +127,58 @@ function animateAboutSection() {
 }
 
 function fetchTestimonials() {
-  fetch(`${BASE_URL}/api/testimonials`)
-    .then(res => res.json())
+  fetch('http://localhost:8080/api/testimonials')
+    .then(response => response.json())
     .then(data => {
-      const list = document.getElementById('testimonialsList');
-      list.innerHTML = '';
-      data.forEach(t => {
+      const testimonialsList = document.getElementById('testimonialsList');
+      testimonialsList.innerHTML = '';
+      data.forEach(testimonial => {
         const div = document.createElement('div');
         div.className = 'testimonial-item';
-        div.innerHTML = `
-          <p class="testimonial-name">${t.name}</p>
-          <p class="testimonial-message">${t.message}</p>
-          <p class="testimonial-rating">${'★'.repeat(t.rating)}${'☆'.repeat(5 - t.rating)}</p>
-        `;
-        list.appendChild(div);
+
+        const name = document.createElement('p');
+        name.className = 'testimonial-name';
+        name.textContent = testimonial.name;
+        div.appendChild(name);
+
+        const message = document.createElement('p');
+        message.className = 'testimonial-message';
+        message.textContent = testimonial.message;
+        div.appendChild(message);
+
+        const rating = document.createElement('p');
+        rating.className = 'testimonial-rating';
+        for (let i = 0; i < 5; i++) {
+          const star = document.createElement('i');
+          star.className = i < testimonial.rating ? 'fas fa-star' : 'far fa-star';
+          rating.appendChild(star);
+        }
+        div.appendChild(rating);
+        testimonialsList.appendChild(div);
       });
     })
     .catch(() => {
-      const list = document.getElementById('testimonialsList');
-      list.innerHTML = '<p>Gagal memuat testimoni.</p>';
+      const testimonialsList = document.getElementById('testimonialsList');
+      testimonialsList.innerHTML = '<p>Gagal memuat testimoni.</p>';
     });
 }
 
 function submitTestimonial() {
   const form = document.getElementById('testimonialForm');
   if (!form) return;
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
     const name = document.getElementById('name').value;
     const message = document.getElementById('message').value;
     const rating = parseInt(document.getElementById('rating').value);
 
-    fetch(`${BASE_URL}/api/testimonials`, {
+    fetch('http://localhost:8080/api/testimonials', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, message, rating })
     })
-    .then(res => {
-      if (!res.ok) throw new Error();
+    .then(res => res.ok ? res : Promise.reject())
+    .then(() => {
       alert('Testimoni berhasil dikirim!');
       form.reset();
       fetchTestimonials();
@@ -158,93 +187,177 @@ function submitTestimonial() {
   });
 }
 
+function checkoutViaWA() {
+  if (cartItems.length === 0) return alert('Keranjang belanja kosong!');
+  let pesan = "Halo, saya ingin memesan:%0A";
+  cartItems.forEach(item => {
+    pesan += `- ${item.name} x${item.quantity} = ${formatCurrency(item.price * item.quantity)}%0A`;
+  });
+  const totalHarga = cartItems.reduce((acc, i) => acc + i.price * i.quantity, 0);
+  pesan += `Total: ${formatCurrency(totalHarga)}%0A%0ATerima kasih!`;
+  const urlWA = `https://wa.me/6285759858593?text=${encodeURIComponent(pesan)}`;
+  window.open(urlWA, '_blank');
+}
+
+function addMenuItem(item) {
+  const li = document.createElement('li');
+  li.className = 'menu-item';
+  li.tabIndex = 0;
+
+  if (item.image) {
+    const img = document.createElement('img');
+    img.src = item.image;
+    img.alt = item.name;
+    img.className = 'menu-image';
+    li.appendChild(img);
+  }
+
+  const desc = document.createElement('p');
+  desc.textContent = item.name;
+  desc.className = 'description';
+  li.appendChild(desc);
+
+  const price = document.createElement('p');
+  price.textContent = formatCurrency(item.price);
+  price.className = 'price';
+  li.appendChild(price);
+
+  if (item.detail) {
+    const note = document.createElement('p');
+    note.textContent = item.detail;
+    note.className = 'note';
+    li.appendChild(note);
+  }
+
+  const btn = document.createElement('button');
+  btn.textContent = "Tambah ke Keranjang";
+  btn.className = "btn-add-cart";
+  btn.addEventListener('click', () => addToCart(item));
+  li.appendChild(btn);
+
+  document.getElementById('menuGrid').appendChild(li);
+}
+
+// === DOM Loaded ===
 document.addEventListener('DOMContentLoaded', () => {
   const menuList = document.getElementById('menuGrid');
-  menuData.forEach(item => {
-    const li = document.createElement('li');
-    li.className = 'menu-item';
-    li.innerHTML = `
-      <img src="${item.image}" alt="${item.name}" class="menu-image">
-      <p class="description">${item.name}</p>
-      <p class="price">${formatCurrency(item.price)}</p>
-      <p class="note">${item.detail}</p>
-      <button class="btn-add-cart">Tambah ke Keranjang</button>
-    `;
-    li.querySelector('button').addEventListener('click', () => addToCart(item));
-    menuList.appendChild(li);
-  });
+  if (menuList) menuData.forEach(addMenuItem);
 
   document.querySelectorAll('.nav-link, .cta-button').forEach(link => {
-    link.addEventListener('click', e => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href === "/login" || href === "/register") return;
+      const targetId = link.getAttribute('data-target') || (href && href.startsWith('#') ? href.substring(1) : null);
+      if (!targetId) return;
       e.preventDefault();
-      const id = link.dataset.target || link.getAttribute('href').substring(1);
       document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-      const target = document.getElementById(id);
-      if (target) {
-        target.classList.add('active');
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        targetSection.classList.add('active');
         link.classList.add('active');
-        if (id === 'aboutSection') animateAboutSection();
-        if (id === 'testimonialsSection') {
+        if (targetId === 'aboutSection') animateAboutSection();
+        if (targetId === 'testimonialsSection') {
           fetchTestimonials();
           submitTestimonial();
         }
-        target.scrollIntoView({ behavior: 'smooth' });
+        targetSection.scrollIntoView({ behavior: 'smooth' });
       }
     });
   });
 
-  const clearCartBtn = document.getElementById("clearCartBtn");
-  const checkoutBtn = document.getElementById("checkoutBtn");
+  const clearCartBtn = document.getElementById('clearCartBtn');
+  if (clearCartBtn) clearCartBtn.addEventListener('click', () => { cartItems = []; updateCartCount(); updateCartUI(); });
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  if (checkoutBtn) checkoutBtn.addEventListener('click', checkoutViaWA);
 
-  if (clearCartBtn) {
-    clearCartBtn.addEventListener("click", () => {
-      cartItems = [];
-      updateCartCount();
-      updateCartUI();
-    });
-  }
+  const cartSection = document.getElementById("checkoutSection");
+  const cookies = document.cookie.split(';').map(c => c.trim());
+  const sessionUser = cookies.find(c => c.startsWith("session_user="));
+  const userLoggedIn = Boolean(sessionUser);
+  if (!userLoggedIn && cartSection) cartSection.innerHTML = "<p>Silakan login untuk mengakses keranjang belanja.</p>";
 
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener("click", () => {
-      if (!cartItems.length) return alert("Keranjang kosong!");
-      let msg = "Halo, saya ingin memesan:\n" + cartItems.map(i => `- ${i.name} x${i.quantity} = ${formatCurrency(i.price * i.quantity)}`).join("\n");
-      msg += `\nTotal: ${formatCurrency(cartItems.reduce((a, b) => a + b.price * b.quantity, 0))}\n\nTerima kasih!`;
-      window.open(`https://wa.me/6285759858593?text=${encodeURIComponent(msg)}`, '_blank');
-    });
-  }
+  updateCartCount();
+  updateCartUI();
 
-  const loggedIn = document.cookie.includes("session_user=");
-  if (!loggedIn) {
-    const cart = document.getElementById("checkoutSection");
-    if (cart) cart.innerHTML = "<p>Silakan login untuk mengakses keranjang belanja.</p>";
-  }
-
-  const userWelcome = document.getElementById("userWelcome");
-  const cookies = Object.fromEntries(document.cookie.split('; ').map(c => c.split('=')));
-  if (cookies.session_user && userWelcome) {
-    userWelcome.textContent = `Halo, ${cookies.session_user}`;
-    userWelcome.style.display = 'inline';
-    document.getElementById("loginNav").style.display = "none";
-    const nameLabel = document.getElementById("userMenuName");
-    if (nameLabel) nameLabel.textContent = `Halo, ${cookies.session_user}`;
+  const urlParams = new URLSearchParams(window.location.search);
+  const target = urlParams.get('target');
+  if (target) {
+    const targetLink = document.querySelector(`[data-target="${target}"]`);
+    if (targetLink) targetLink.click();
   }
 
   const userIcon = document.querySelector(".user-icon");
   const userMenu = document.getElementById("userMenu");
+
   if (userIcon && userMenu) {
     userIcon.addEventListener("click", () => {
       userMenu.classList.toggle("hidden");
     });
-  }
 
-  const params = new URLSearchParams(window.location.search);
-  const section = params.get('target');
-  if (section) {
-    const link = document.querySelector(`[data-target="${section}"]`);
-    if (link) link.click();
+    if (sessionUser) {
+      const username = decodeURIComponent(sessionUser.split("=")[1]);
+      const nameEl = document.getElementById("userMenuName");
+      const guestEl = document.getElementById("userMenuGuest");
+      const loggedEl = document.getElementById("userMenuLogged");
+      if (nameEl) nameEl.textContent = `Halo, ${username}`;
+      if (guestEl) guestEl.classList.add("hidden");
+      if (loggedEl) loggedEl.classList.remove("hidden");
+    } else {
+      const guestEl = document.getElementById("userMenuGuest");
+      const loggedEl = document.getElementById("userMenuLogged");
+      if (guestEl) guestEl.classList.remove("hidden");
+      if (loggedEl) loggedEl.classList.add("hidden");
+    }
   }
-
-  updateCartCount();
-  updateCartUI();
 });
+
+
+// === Login/Register Popup Toggle ===
+document.addEventListener('DOMContentLoaded', () => {
+  const guestLoginBtn = document.getElementById('userMenuGuestLogin');
+  const loginPopup = document.getElementById('loginPopup');
+  const registerPopup = document.getElementById('registerPopup');
+  const userIcon = document.querySelector('.user-icon');
+  const userMenu = document.getElementById('userMenu');
+
+  // Toggle menu user
+  if (userIcon && userMenu) {
+    userIcon.addEventListener('click', () => {
+      userMenu.classList.toggle('hidden');
+      loginPopup.classList.add('hidden');
+      registerPopup.classList.add('hidden');
+    });
+  }
+
+  // Tombol login dari user menu
+  if (guestLoginBtn) {
+    guestLoginBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      loginPopup.classList.toggle('hidden');
+      registerPopup.classList.add('hidden');
+      userMenu.classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Delegasi event untuk #showRegister & #showLogin (karena popup belum render saat awal)
+  document.body.addEventListener('click', (e) => {
+    if (e.target.id === 'showRegister') {
+      e.preventDefault();
+      registerPopup.classList.remove('hidden');
+      loginPopup.classList.add('hidden');
+      userMenu.classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    if (e.target.id === 'showLogin') {
+      e.preventDefault();
+      loginPopup.classList.remove('hidden');
+      registerPopup.classList.add('hidden');
+      userMenu.classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+});
+

@@ -633,3 +633,253 @@ footer {
   display: none;
 }
 
+
+/* === Reset & Base === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #D9C2A7;
+  color: #4A4A4A;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 60px;
+  overflow-x: hidden;
+}
+
+/* === Floating Login Button === */
+.floating-login {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #4A1D1D;
+  color: #D9C2A7;
+  padding: 14px 16px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  text-align: center;
+  z-index: 9999;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.floating-login:hover {
+  background: #2D0F0F;
+  transform: scale(1.1);
+}
+
+/* === User Menu === */
+.user-menu {
+  position: fixed;
+  bottom: 75px;
+  right: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  padding: 10px;
+  z-index: 9999;
+  display: none;
+  width: 220px;
+}
+.user-menu.show {
+  display: block;
+}
+.user-menu a {
+  display: block;
+  color: #3C2F2F;
+  text-decoration: none;
+  margin: 8px 0;
+  font-weight: 600;
+}
+.user-menu p {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #3C2F2F;
+}
+.user-menu form input,
+.user-menu form button {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-family: 'Poppins', sans-serif;
+}
+.user-menu form button {
+  background: #4A1D1D;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.user-menu form button:hover {
+  background: #2D0F0F;
+}
+
+/* === Login & Register Popup Styling === */
+.login-popup {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  width: 300px;
+}
+
+.login-popup.hidden {
+  display: none;
+}
+
+.login-popup form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-popup h3 {
+  text-align: center;
+  color: #3C2F2F;
+  margin-bottom: 10px;
+}
+
+.login-popup input,
+.login-popup button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.login-popup button {
+  background: #4A1D1D;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-popup button:hover {
+  background: #2D0F0F;
+}
+
+/* === Responsive for Small Devices === */
+@media (max-width: 600px) {
+  .login-popup {
+    width: 90%;
+    left: 5%;
+    right: 5%;
+    bottom: 80px;
+  }
+}
+
+
+.login-popup input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.login-popup {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+
+@media (max-width: 400px) {
+  .login-popup input,
+  .login-popup button {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .user-menu {
+    width: 90%;
+    right: 5%;
+    left: 5%;
+  }
+}
+
+.popup {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  width: 300px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.popup.hidden {
+  display: none !important;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-form input,
+.auth-form button {
+  padding: 10px;
+  font-size: 16px;
+}
+
+#registerSection .form-container {
+  max-width: 400px;
+  margin: 40px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+#registerSection .auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#registerSection input,
+#registerSection button {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#registerSection button {
+  background-color: #4A1D1D;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#registerSection button:hover {
+  background-color: #2D0F0F;
+}
+
+@media (max-width: 600px) {
+  #registerSection .form-container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  #registerSection input,
+  #registerSection button {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
