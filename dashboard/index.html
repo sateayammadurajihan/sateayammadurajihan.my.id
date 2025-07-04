@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Admin - Sate Ayam Madura Jihan</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <h1>Dashboard Admin</h1>
+      <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+    <ul class="nav-list" id="navList">
+      <li><a href="#" id="menuLink">Kelola Menu</a></li>
+      <li><a href="#" id="salesLink">Rekap Penjualan</a></li>
+      <li><a href="index.html">Kembali ke Halaman Utama</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>Kelola Menu</h2>
+    <form id="menuForm">
+      <input type="text" id="menuName" placeholder="Nama Menu" required>
+      <input type="number" id="menuPrice" placeholder="Harga" required>
+      <input type="text" id="menuImage" placeholder="URL Gambar" required>
+      <button type="submit">Tambah Menu</button>
+    </form>
+
+    <h3>Daftar Menu</h3>
+    <ul id="menuList"></ul>
+  </main>
+
+  <script src="admin.js"></script>
+  <script>
+    // Toggle navbar visibility
+    const hamburger = document.getElementById('hamburger');
+    const navList = document.getElementById('navList');
+
+    hamburger.addEventListener('click', () => {
+      navList.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
