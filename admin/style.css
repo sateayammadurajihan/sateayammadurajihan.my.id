@@ -1,0 +1,151 @@
+/* === Global === */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f2f2f2;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* === Header === */
+header {
+  background: #3b2c2c;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hamburger {
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.header-links a {
+  color: #f0c28b;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+/* === Sidebar === */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 200px;
+  height: 100%;
+  background: #4a1d1d;
+  padding-top: 60px;
+  transition: left 0.3s;
+  z-index: 1000;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li a {
+  display: block;
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+}
+
+.sidebar li a:hover {
+  background: #5c2b2b;
+}
+
+/* === Main Layout === */
+main {
+  margin: 80px 20px 20px 20px;
+  padding-left: 220px;
+}
+
+@media screen and (max-width: 768px) {
+  main {
+    padding-left: 20px;
+  }
+}
+
+/* === Form Tambah Menu === */
+form input,
+form button {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+form button {
+  background: #4a1d1d;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+form button:hover {
+  background: #3a1515;
+}
+
+/* === Menu List === */
+#menuList {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.menu-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-info img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.menu-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.menu-actions .btn {
+  background: #3C2F2F;
+  color: #fff;
+  padding: 6px 12px;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.menu-actions .btn:hover {
+  opacity: 0.9;
+}
