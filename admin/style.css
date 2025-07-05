@@ -1,0 +1,252 @@
+/* === GLOBAL === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #d4d2ff, #ffffff);
+  color: #333;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* === AUTH CONTAINER === */
+.container {
+  position: relative;
+  width: 800px;
+  height: 500px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+}
+
+.form-box {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  background: #ffffff;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: 0.6s ease-in-out;
+  z-index: 1;
+  text-align: center;
+}
+
+.form-box h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-box input {
+  width: 100%;
+  padding: 12px 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.form-box button {
+  padding: 12px;
+  background: #4a1d1d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.form-box button:hover {
+  background: #3a1515;
+}
+
+/* === SWITCH BOX === */
+.switch-box {
+  position: absolute;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: #4a1d1d;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+  transition: 0.6s ease-in-out;
+}
+
+.switch-box button {
+  background: #ffffff;
+  color: #4a1d1d;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  margin-top: 20px;
+}
+
+.container.active .login-box {
+  transform: translateX(100%);
+}
+
+.container.active .register-box {
+  transform: translateX(100%);
+  z-index: 2;
+}
+
+.container.active .switch-box {
+  transform: translateX(-100%);
+}
+
+/* === SIDEBAR / DASHBOARD === */
+header {
+  background: #3b2c2c;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hamburger {
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.header-links a {
+  color: #f0c28b;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 200px;
+  height: 100%;
+  background: #4a1d1d;
+  padding-top: 60px;
+  transition: left 0.3s;
+  z-index: 1000;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li a {
+  display: block;
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+}
+
+.sidebar li a:hover {
+  background: #5c2b2b;
+}
+
+main {
+  margin: 80px 20px 20px 20px;
+  padding-left: 220px;
+}
+
+@media screen and (max-width: 768px) {
+  main {
+    padding-left: 20px;
+  }
+}
+
+/* === FORM TAMBAH MENU === */
+form input,
+form button {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+form button {
+  background: #4a1d1d;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+form button:hover {
+  background: #3a1515;
+}
+
+/* === MENU LIST === */
+#menuList {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.menu-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-info img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.menu-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.menu-actions .btn {
+  background: #3C2F2F;
+  color: #fff;
+  padding: 6px 12px;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.menu-actions .btn:hover {
+  opacity: 0.9;
+}
