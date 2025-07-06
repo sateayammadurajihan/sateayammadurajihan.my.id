@@ -8,30 +8,12 @@ function updateCartCount() {
   const cartCountNav = document.getElementById('cartCountNav');
   let totalCount = 0;
   cartItems.forEach(item => totalCount += item.quantity);
-  if (cartCountNav) cartCountNav.textContent = `${totalCount}`;
-}
-
-function updateCartPreview() {
-  const previewList = document.getElementById("cartPreviewList");
-  const previewTotal = document.getElementById("cartPreviewTotal");
-  if (!previewList || !previewTotal) return;
-  previewList.innerHTML = "";
-
-  let total = 0;
-  cartItems.forEach(item => {
-    const li = document.createElement('li');
-    li.textContent = `${item.name} x${item.quantity}`;
-    previewList.appendChild(li);
-    total += item.price * item.quantity;
-  });
-
-  previewTotal.textContent = `Total: ${formatCurrency(total)}`;
+  if(cartCountNav) cartCountNav.textContent = `${totalCount}`;
 }
 
 function updateCartUI() {
   const cartList = document.getElementById('checkoutList');
   const cartTotal = document.getElementById('checkoutTotal');
-  if (!cartList || !cartTotal) return;
   cartList.innerHTML = "";
 
   let totalPrice = 0;
@@ -56,7 +38,6 @@ function updateCartUI() {
       }
       updateCartCount();
       updateCartUI();
-      updateCartPreview();
     });
     li.appendChild(decBtn);
 
@@ -73,7 +54,6 @@ function updateCartUI() {
       item.quantity++;
       updateCartCount();
       updateCartUI();
-      updateCartPreview();
     });
     li.appendChild(incBtn);
 
@@ -84,26 +64,24 @@ function updateCartUI() {
       cartItems.splice(index, 1);
       updateCartCount();
       updateCartUI();
-      updateCartPreview();
     });
     li.appendChild(remBtn);
 
     cartList.appendChild(li);
   });
 
-  cartTotal.textContent = `Total: ${formatCurrency(totalPrice)}`;
+  if(cartTotal) cartTotal.textContent = `Total: ${formatCurrency(totalPrice)}`;
 }
 
 function addToCart(item) {
   const index = cartItems.findIndex(i => i.name === item.name);
-  if (index >= 0) {
+  if(index >= 0) {
     cartItems[index].quantity++;
   } else {
-    cartItems.push({ ...item, quantity: 1 });
+    cartItems.push({...item, quantity: 1});
   }
   updateCartCount();
   updateCartUI();
-  updateCartPreview();
 }
 
 function animateAboutSection() {
@@ -122,90 +100,93 @@ function animateAboutSection() {
 document.addEventListener('DOMContentLoaded', () => {
   const menuList = document.getElementById('menuGrid');
 
+  // FETCH MENU DARI DATABASE
   fetch('get_menu.php')
-    .then(res => res.json())
-    .then(menuData => {
-      if (!menuList) return;
-      menuData.forEach(item => {
-        const li = document.createElement('li');
-        li.className = 'menu-item';
-        li.tabIndex = 0;
+  .then(res => res.json())
+  .then(menuData => {
+    console.log("Data menu:", menuData); 
+    const menuList = document.getElementById('menuGrid');
+    menuData.forEach(item => {
+      console.log("Memasukkan item:", item);
+      const li = document.createElement('li');
+      li.className = 'menu-item';
 
-        if (item.image_url) {
-          const img = document.createElement('img');
-          img.src = item.image_url;
-          img.alt = item.name;
-          img.className = 'menu-image';
-          li.appendChild(img);
-        }
+      if(item.image_url) {
+        const img = document.createElement('img');
+        img.src = item.image_url;
+        img.alt = item.name;
+        img.className = 'menu-image';
+        li.appendChild(img);
+      }
 
-        const desc = document.createElement('p');
-        desc.textContent = item.name;
-        desc.className = 'description';
-        li.appendChild(desc);
+      const desc = document.createElement('p');
+      desc.textContent = item.name;
+      li.appendChild(desc);
 
-        const price = document.createElement('p');
-        price.textContent = formatCurrency(Number(item.price));
-        price.className = 'price';
-        li.appendChild(price);
+      const price = document.createElement('p');
+      price.textContent = formatCurrency(Number(item.price));
+      li.appendChild(price);
 
-        if (item.detail) {
-          const note = document.createElement('p');
-          note.textContent = item.detail;
-          note.className = 'note';
-          li.appendChild(note);
-        }
+      const btn = document.createElement('button');
+      btn.className = 'btn-add-cart';
+      btn.textContent = "Tambah ke Keranjang";
+      btn.addEventListener('click', () => addToCart(item));
+      li.appendChild(btn);
 
-        const btn = document.createElement('button');
-        btn.textContent = "Tambah ke Keranjang";
-        btn.className = "btn-add-cart";
-        btn.addEventListener('click', () => addToCart(item));
-        li.appendChild(btn);
+      menuList.appendChild(li);
+    });
+  })
+  .catch(err => {
+    console.error("Gagal fetch menu:", err);
+  });
 
-        menuList.appendChild(li);
+
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('data-target');
+
+      document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+      document.getElementById(targetId).classList.add('active');
+      link.classList.add('active');
+
+      if (targetId === 'aboutSection') {
+        animateAboutSection();
+      }
+    });
+  });
+
+  const clearCartBtn = document.getElementById('clearCartBtn');
+  if(clearCartBtn) {
+    clearCartBtn.addEventListener('click', () => {
+      cartItems = [];
+      updateCartCount();
+      updateCartUI();
+    });
+  }
+
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  if(checkoutBtn) {
+    checkoutBtn.addEventListener('click', () => {
+      if(cartItems.length === 0) {
+        alert('Keranjang belanja kosong!');
+        return;
+      }
+      let pesan = "Halo, saya ingin memesan:\n";
+      cartItems.forEach(item => {
+        pesan += `- ${item.name} x${item.quantity} = ${formatCurrency(item.price * item.quantity)}\n`;
       });
-    })
-    .catch(error => {
-      console.error("Gagal mengambil menu:", error);
+      const totalHarga = cartItems.reduce((acc, i) => acc + i.price * i.quantity, 0);
+      pesan += `Total: ${formatCurrency(totalHarga)}\n\nTerima kasih!`;
+
+      const nomorWA = '6285759858593';
+      const urlWA = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
+      window.open(urlWA, '_blank');
     });
-
-  document.getElementById("cartToggle")?.addEventListener("click", () => {
-    const cartBox = document.getElementById("cartPreview");
-    if (cartBox) {
-      cartBox.style.display = cartBox.style.display === "block" ? "none" : "block";
-      updateCartPreview();
-    }
-  });
-
-  document.getElementById("goToCheckout")?.addEventListener("click", () => {
-    document.getElementById("checkoutSection")?.scrollIntoView({ behavior: "smooth" });
-  });
-
-  document.getElementById('clearCartBtn')?.addEventListener('click', () => {
-    cartItems = [];
-    updateCartCount();
-    updateCartUI();
-    updateCartPreview();
-  });
-
-  document.getElementById('checkoutBtn')?.addEventListener('click', () => {
-    if (cartItems.length === 0) {
-      alert('Keranjang belanja kosong!');
-      return;
-    }
-    let pesan = "Halo, saya ingin memesan:\n";
-    cartItems.forEach(item => {
-      pesan += `- ${item.name} x${item.quantity} = ${formatCurrency(item.price * item.quantity)}\n`;
-    });
-    const totalHarga = cartItems.reduce((acc, i) => acc + i.price * i.quantity, 0);
-    pesan += `Total: ${formatCurrency(totalHarga)}\n\nTerima kasih!`;
-
-    const nomorWA = '6285759858593';
-    const urlWA = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
-    window.open(urlWA, '_blank');
-  });
+  }
 
   updateCartCount();
   updateCartUI();
-  updateCartPreview();
 });
