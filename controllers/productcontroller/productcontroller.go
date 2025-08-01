@@ -1,21 +1,20 @@
 package productcontroller
 
 import (
+	"fmt"
 	"html/template"
+	"io"
 	"log"
 	"net/http"
 	"os"
-	"io"
 	"strconv"
 	"time"
-	"fmt"
-    
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"sateayammadura/entities"
-	"sateayammadura/models/categorymodel"
-	"sateayammadura/models/productmodel"
+	"sateayammadurajihan.my.id/entities"
+	"sateayammadurajihan.my.id/models/categorymodel"
+	"sateayammadurajihan.my.id/models/productmodel"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -45,36 +44,35 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 // productcontroller.go
 func Detail(w http.ResponseWriter, r *http.Request) {
-    productID := r.URL.Query().Get("id")
-    if productID == "" {
-        http.Error(w, "Product ID is required", http.StatusBadRequest)
-        return
-    }
+	productID := r.URL.Query().Get("id")
+	if productID == "" {
+		http.Error(w, "Product ID is required", http.StatusBadRequest)
+		return
+	}
 
-    product, err := productmodel.GetByID(productID)
-    if err != nil {
-        log.Println("Error getting product:", err)
-        http.Error(w, "Produk tidak ditemukan", http.StatusNotFound)
-        return
-    }
+	product, err := productmodel.GetByID(productID)
+	if err != nil {
+		log.Println("Error getting product:", err)
+		http.Error(w, "Produk tidak ditemukan", http.StatusNotFound)
+		return
+	}
 
-    data := map[string]any{
-        "product": product,
-    }
+	data := map[string]any{
+		"product": product,
+	}
 
-    tmpl, err := template.ParseFiles("views/product/detail.html")
-    if err != nil {
-        log.Println("Template error:", err)
-        http.Error(w, "Template error", http.StatusInternalServerError)
-        return
-    }
+	tmpl, err := template.ParseFiles("views/product/detail.html")
+	if err != nil {
+		log.Println("Template error:", err)
+		http.Error(w, "Template error", http.StatusInternalServerError)
+		return
+	}
 
-    if err := tmpl.Execute(w, data); err != nil {
-        log.Println("Template execution error:", err)
-        http.Error(w, "Error rendering page", http.StatusInternalServerError)
-    }
+	if err := tmpl.Execute(w, data); err != nil {
+		log.Println("Template execution error:", err)
+		http.Error(w, "Error rendering page", http.StatusInternalServerError)
+	}
 }
-
 
 func Add(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
@@ -161,19 +159,18 @@ func Add(w http.ResponseWriter, r *http.Request) {
 	defer dst.Close()
 	io.Copy(dst, file)
 
-	// ✅ Buat entitas produk
-	product := entities.Product{
-		ID:           primitive.NewObjectID(),
-		Name:         name,
-		CategoryID:   categoryID,
-		CategoryName: category.Name, // sinkronisasi nama kategori
-		Stock:        stock,
-		Description:  description,
-		GambarURL:    "/images/" + filename,
-		Harga:        harga,
-		CreatedAt:    primitive.NewDateTimeFromTime(time.Now()),
-		UpdatedAt:    primitive.NewDateTimeFromTime(time.Now()),
-	}
+	 product := entities.Product{
+        ID:           primitive.NewObjectID(),
+        Name:         name,
+        CategoryID:   categoryID,
+        CategoryName: category.Name, // sinkronisasi nama kategori
+        Stock:        stock,
+        Description:  description,
+        GambarURL:    "/images/" + filename,
+        Harga:        harga,
+        CreatedAt:    time.Now(),
+        UpdatedAt:    time.Now(),
+    }
 
 	if ok := productmodel.Create(product); ok {
 		http.Redirect(w, r, "/products", http.StatusSeeOther)
@@ -258,7 +255,7 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 		Stock:        stock,
 		Description:  description,
 		Harga:        price,
-		UpdatedAt:    primitive.NewDateTimeFromTime(time.Now()),
+		UpdatedAt:    time.Now(),
 	}
 	if imageURL != "" {
 		update.GambarURL = imageURL
@@ -271,7 +268,6 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/products", http.StatusSeeOther)
 }
-
 
 func Delete(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
@@ -293,20 +289,19 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 
 // Fungsi helper untuk format harga
 func FormatRupiah(price int) string {
-    result := fmt.Sprintf("Rp %s", formatThousands(price))
-    return result
+	result := fmt.Sprintf("Rp %s", formatThousands(price))
+	return result
 }
 
 // Fungsi bantu untuk kasih titik pemisah ribuan
 func formatThousands(n int) string {
-    in := fmt.Sprintf("%d", n)
-    out := ""
-    for i, digit := range in {
-        if i != 0 && (len(in)-i)%3 == 0 {
-            out += "."
-        }
-        out += string(digit)
-    }
-    return out
+	in := fmt.Sprintf("%d", n)
+	out := ""
+	for i, digit := range in {
+		if i != 0 && (len(in)-i)%3 == 0 {
+			out += "."
+		}
+		out += string(digit)
+	}
+	return out
 }
-

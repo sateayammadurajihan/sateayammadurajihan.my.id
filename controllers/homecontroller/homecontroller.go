@@ -2,19 +2,24 @@ package homecontroller
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
-	"sateayammadura/models/adminmodel"
-	"sateayammadura/models/productmodel"
 	"text/template"
+
+	"sateayammadurajihan.my.id/models/adminmodel"
+	"sateayammadurajihan.my.id/models/productmodel"
 )
 
 // Welcome Handler untuk halaman utama
 func Welcome(w http.ResponseWriter, r *http.Request) {
+	products, _ := productmodel.GetAll()
+	log.Printf("Jumlah produk: %d", len(products)) // Logging
+
 	temp, err := template.ParseFiles("views/home/index.html")
 	if err != nil {
 		panic(err)
 	}
-	products, _ := productmodel.GetAll()
+
 	data := map[string]interface{}{
 		"Products": products,
 	}
@@ -44,7 +49,6 @@ func AdminLogin(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
-	// Set cookie session sederhana
 	http.SetCookie(w, &http.Cookie{
 		Name:     "admin_session",
 		Value:    "loggedin",

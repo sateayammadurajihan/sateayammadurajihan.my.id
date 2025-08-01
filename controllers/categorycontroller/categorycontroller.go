@@ -3,8 +3,8 @@ package categorycontroller
 import (
 	"html/template"
 	"net/http"
-	"sateayammadura/entities"
-	"sateayammadura/models/categorymodel"
+	"sateayammadurajihan.my.id/entities"
+    "sateayammadurajihan.my.id/models/categorymodel"
 	"time"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )

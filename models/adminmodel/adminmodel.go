@@ -2,7 +2,7 @@ package adminmodel
 
 import (
 	"context"
-	"sateayammadura/config"
+	"sateayammadurajihan.my.id/config"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"

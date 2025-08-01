@@ -2,8 +2,8 @@ package categorymodel
 
 import (
     "context"
-    "sateayammadura/config"
-    "sateayammadura/entities"
+    "sateayammadurajihan.my.id/config"
+    "sateayammadurajihan.my.id/entities"
     "go.mongodb.org/mongo-driver/bson"
     "go.mongodb.org/mongo-driver/bson/primitive"
     "time"
